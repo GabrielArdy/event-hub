@@ -1,0 +1,538 @@
+{
+  "version": "6.0",
+  "nxVersion": "19.8.14",
+  "deps": {
+    "@nx/eslint": "^19.0.0",
+    "@nx/js": "^19.0.0",
+    "@nx/workspace": "^19.0.0",
+    "nx": "^19.0.0",
+    "prettier": "^3.3.0",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0"
+  },
+  "pathMappings": {
+    "@eventhub/shared-types": [
+      "libs/shared-types/src/index.ts"
+    ],
+    "@eventhub/shared-utils": [
+      "libs/shared-utils/src/index.ts"
+    ]
+  },
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "projectFileMap": {
+      "@eventhub/shared-types": [
+        {
+          "file": "libs/shared-types/package.json",
+          "hash": "6908008780785739792"
+        },
+        {
+          "file": "libs/shared-types/src/api.types.ts",
+          "hash": "9510046861204122594"
+        },
+        {
+          "file": "libs/shared-types/src/auth.types.ts",
+          "hash": "4162209998970031756"
+        },
+        {
+          "file": "libs/shared-types/src/event.types.ts",
+          "hash": "14674033451351499061"
+        },
+        {
+          "file": "libs/shared-types/src/index.ts",
+          "hash": "10062439417355239632"
+        },
+        {
+          "file": "libs/shared-types/src/payment.types.ts",
+          "hash": "14184911193412747938"
+        },
+        {
+          "file": "libs/shared-types/src/ticket.types.ts",
+          "hash": "695269067289976293"
+        },
+        {
+          "file": "libs/shared-types/tsconfig.json",
+          "hash": "6393941582597995897"
+        }
+      ],
+      "@eventhub/shared-utils": [
+        {
+          "file": "libs/shared-utils/package.json",
+          "hash": "16227189669541249783"
+        },
+        {
+          "file": "libs/shared-utils/src/date.util.ts",
+          "hash": "2222459906102466378"
+        },
+        {
+          "file": "libs/shared-utils/src/index.ts",
+          "hash": "2924482515500579776"
+        },
+        {
+          "file": "libs/shared-utils/src/price.util.ts",
+          "hash": "12531126466580025623"
+        },
+        {
+          "file": "libs/shared-utils/tsconfig.json",
+          "hash": "6393941582597995897"
+        }
+      ],
+      "@eventhub/web": [
+        {
+          "file": "apps/web/package.json",
+          "hash": "11935368100973655261",
+          "deps": [
+            "@eventhub/shared-types",
+            "@eventhub/shared-utils"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/app.component.ts",
+          "hash": "13219207368805615637"
+        },
+        {
+          "file": "apps/web/src/app/app.config.ts",
+          "hash": "7151783615978486973"
+        },
+        {
+          "file": "apps/web/src/app/app.routes.ts",
+          "hash": "715366605780054742"
+        },
+        {
+          "file": "apps/web/src/app/core/guards/auth.guard.ts",
+          "hash": "3809588583187352315"
+        },
+        {
+          "file": "apps/web/src/app/core/guards/role.guard.ts",
+          "hash": "16916339603219350334"
+        },
+        {
+          "file": "apps/web/src/app/core/interceptors/auth.interceptor.ts",
+          "hash": "14881767344458510883"
+        },
+        {
+          "file": "apps/web/src/app/core/services/ws.service.ts",
+          "hash": "9000804909561404943"
+        },
+        {
+          "file": "apps/web/src/app/features/account/account.routes.ts",
+          "hash": "11254549835108192364"
+        },
+        {
+          "file": "apps/web/src/app/features/account/pages/my-tickets/my-tickets.component.ts",
+          "hash": "995955998636251349"
+        },
+        {
+          "file": "apps/web/src/app/features/account/pages/profile/profile.component.ts",
+          "hash": "1390462911839304840"
+        },
+        {
+          "file": "apps/web/src/app/features/account/pages/ticket-detail/ticket-detail.component.ts",
+          "hash": "14833883697764280843"
+        },
+        {
+          "file": "apps/web/src/app/features/account/pages/transactions/transactions.component.ts",
+          "hash": "18317626233950022653"
+        },
+        {
+          "file": "apps/web/src/app/features/account/pages/wishlist/wishlist.component.ts",
+          "hash": "5841268538570406886"
+        },
+        {
+          "file": "apps/web/src/app/features/auth/auth.routes.ts",
+          "hash": "11046668113960364992"
+        },
+        {
+          "file": "apps/web/src/app/features/auth/pages/forgot-password/forgot-password.component.ts",
+          "hash": "15194934006060280679"
+        },
+        {
+          "file": "apps/web/src/app/features/auth/pages/login/login.component.ts",
+          "hash": "11087427888827922337"
+        },
+        {
+          "file": "apps/web/src/app/features/auth/pages/register/register.component.ts",
+          "hash": "2033405798494451012"
+        },
+        {
+          "file": "apps/web/src/app/features/auth/pages/reset-password/reset-password.component.ts",
+          "hash": "9891835133451300687"
+        },
+        {
+          "file": "apps/web/src/app/features/auth/pages/verify-email/verify-email.component.ts",
+          "hash": "17333371107317100348"
+        },
+        {
+          "file": "apps/web/src/app/features/checkout/checkout.routes.ts",
+          "hash": "18000681590400458708"
+        },
+        {
+          "file": "apps/web/src/app/features/checkout/pages/checkout-success/checkout-success.component.ts",
+          "hash": "14867145888518153976"
+        },
+        {
+          "file": "apps/web/src/app/features/checkout/pages/checkout/checkout.component.ts",
+          "hash": "1088089536637788141"
+        },
+        {
+          "file": "apps/web/src/app/features/checkout/store/checkout.store.ts",
+          "hash": "3316319407039241740"
+        },
+        {
+          "file": "apps/web/src/app/features/events/events.routes.ts",
+          "hash": "11619107539888973411"
+        },
+        {
+          "file": "apps/web/src/app/features/events/pages/event-detail/event-detail.component.ts",
+          "hash": "6668840046739475931"
+        },
+        {
+          "file": "apps/web/src/app/features/events/pages/event-listing/event-listing.component.ts",
+          "hash": "5990282070923915886"
+        },
+        {
+          "file": "apps/web/src/app/features/events/services/events-api.service.ts",
+          "hash": "729955064823495013"
+        },
+        {
+          "file": "apps/web/src/app/features/events/store/events.store.ts",
+          "hash": "3744608409715041907"
+        },
+        {
+          "file": "apps/web/src/app/features/organizer/organizer.routes.ts",
+          "hash": "6729959115826144828"
+        },
+        {
+          "file": "apps/web/src/app/features/organizer/pages/dashboard/dashboard.component.ts",
+          "hash": "4864389082283089562"
+        },
+        {
+          "file": "apps/web/src/app/features/organizer/pages/event-dashboard/event-dashboard.component.ts",
+          "hash": "11072669463150102890"
+        },
+        {
+          "file": "apps/web/src/app/features/organizer/pages/event-form/event-form.component.ts",
+          "hash": "10113418695050461168"
+        },
+        {
+          "file": "apps/web/src/app/features/organizer/pages/event-list/event-list.component.ts",
+          "hash": "6884848558422488820"
+        },
+        {
+          "file": "apps/web/src/app/features/organizer/pages/event-report/event-report.component.ts",
+          "hash": "9534297066965820668"
+        },
+        {
+          "file": "apps/web/src/environments/environment.prod.ts",
+          "hash": "17752928677858118276"
+        },
+        {
+          "file": "apps/web/src/environments/environment.ts",
+          "hash": "15519570844770375291"
+        },
+        {
+          "file": "apps/web/src/main.ts",
+          "hash": "14420088177726562137"
+        },
+        {
+          "file": "apps/web/tsconfig.json",
+          "hash": "14155732241974087057"
+        }
+      ],
+      "@eventhub/api": [
+        {
+          "file": "apps/api/package.json",
+          "hash": "8357213818174184423",
+          "deps": [
+            "@eventhub/shared-types",
+            "@eventhub/shared-utils"
+          ]
+        },
+        {
+          "file": "apps/api/src/app.module.ts",
+          "hash": "3665980947642090322"
+        },
+        {
+          "file": "apps/api/src/common/decorators/current-user.decorator.ts",
+          "hash": "5763295082100224284"
+        },
+        {
+          "file": "apps/api/src/common/decorators/public.decorator.ts",
+          "hash": "17960535925631508594"
+        },
+        {
+          "file": "apps/api/src/common/decorators/roles.decorator.ts",
+          "hash": "4372387079106483298"
+        },
+        {
+          "file": "apps/api/src/common/filters/http-exception.filter.ts",
+          "hash": "16193927241886368425"
+        },
+        {
+          "file": "apps/api/src/common/guards/roles.guard.ts",
+          "hash": "13799834311778245263"
+        },
+        {
+          "file": "apps/api/src/common/interceptors/response.interceptor.ts",
+          "hash": "2946543060350058779"
+        },
+        {
+          "file": "apps/api/src/common/prisma/prisma.module.ts",
+          "hash": "10238961258611182846"
+        },
+        {
+          "file": "apps/api/src/common/prisma/prisma.service.ts",
+          "hash": "5901575426195843227"
+        },
+        {
+          "file": "apps/api/src/common/queue/queue.module.ts",
+          "hash": "4711864935829730717"
+        },
+        {
+          "file": "apps/api/src/common/queue/queue.service.ts",
+          "hash": "5485580692232735788"
+        },
+        {
+          "file": "apps/api/src/common/redis/redis.module.ts",
+          "hash": "2960121496123144592"
+        },
+        {
+          "file": "apps/api/src/common/redis/redis.service.ts",
+          "hash": "4952858465312359483"
+        },
+        {
+          "file": "apps/api/src/common/storage/storage.service.ts",
+          "hash": "2883250478087092413"
+        },
+        {
+          "file": "apps/api/src/common/utils/fee-calculator.util.ts",
+          "hash": "11069362464855364289"
+        },
+        {
+          "file": "apps/api/src/common/utils/qr-token.util.ts",
+          "hash": "2291891656687281547"
+        },
+        {
+          "file": "apps/api/src/main.ts",
+          "hash": "5079831129233186429"
+        },
+        {
+          "file": "apps/api/src/modules/auth/auth.controller.ts",
+          "hash": "1526798541062619549"
+        },
+        {
+          "file": "apps/api/src/modules/auth/auth.module.ts",
+          "hash": "1475444232730968459"
+        },
+        {
+          "file": "apps/api/src/modules/auth/auth.service.ts",
+          "hash": "5013761752846837284"
+        },
+        {
+          "file": "apps/api/src/modules/auth/dto/forgot-password.dto.ts",
+          "hash": "5756104607142267553"
+        },
+        {
+          "file": "apps/api/src/modules/auth/dto/login.dto.ts",
+          "hash": "15818930097193323674"
+        },
+        {
+          "file": "apps/api/src/modules/auth/dto/register.dto.ts",
+          "hash": "4857734039371039387"
+        },
+        {
+          "file": "apps/api/src/modules/auth/dto/reset-password.dto.ts",
+          "hash": "4932224204673001045"
+        },
+        {
+          "file": "apps/api/src/modules/auth/dto/update-profile.dto.ts",
+          "hash": "7523963920490684355"
+        },
+        {
+          "file": "apps/api/src/modules/auth/dto/verify-email.dto.ts",
+          "hash": "8676239587820869257"
+        },
+        {
+          "file": "apps/api/src/modules/auth/guards/jwt-auth.guard.ts",
+          "hash": "7109040762899624007"
+        },
+        {
+          "file": "apps/api/src/modules/auth/guards/refresh-auth.guard.ts",
+          "hash": "14859541449546734798"
+        },
+        {
+          "file": "apps/api/src/modules/auth/strategies/jwt.strategy.ts",
+          "hash": "8050607908665626038"
+        },
+        {
+          "file": "apps/api/src/modules/auth/strategies/refresh.strategy.ts",
+          "hash": "16628017291353640601"
+        },
+        {
+          "file": "apps/api/src/modules/organizer/dto/create-event.dto.ts",
+          "hash": "13845852479567184392"
+        },
+        {
+          "file": "apps/api/src/modules/organizer/dto/create-ticket-type.dto.ts",
+          "hash": "1858973892384653188"
+        },
+        {
+          "file": "apps/api/src/modules/organizer/dto/set-payment-config.dto.ts",
+          "hash": "9544404052244496881"
+        },
+        {
+          "file": "apps/api/src/modules/organizer/dto/update-ticket-type.dto.ts",
+          "hash": "10766306931929793487"
+        },
+        {
+          "file": "apps/api/src/modules/organizer/organizer.controller.ts",
+          "hash": "3577648891071198654"
+        },
+        {
+          "file": "apps/api/src/modules/organizer/organizer.gateway.ts",
+          "hash": "5078367149650428529"
+        },
+        {
+          "file": "apps/api/src/modules/organizer/organizer.module.ts",
+          "hash": "1299939844853005275"
+        },
+        {
+          "file": "apps/api/src/modules/organizer/organizer.service.ts",
+          "hash": "156575917488743892",
+          "deps": [
+            "@eventhub/shared-utils"
+          ]
+        },
+        {
+          "file": "apps/api/src/modules/payment/dto/initiate-payment.dto.ts",
+          "hash": "5725720396978708726"
+        },
+        {
+          "file": "apps/api/src/modules/payment/dto/refund-request.dto.ts",
+          "hash": "2778420219496480997"
+        },
+        {
+          "file": "apps/api/src/modules/payment/gateways/midtrans.gateway.ts",
+          "hash": "8786195049568733318"
+        },
+        {
+          "file": "apps/api/src/modules/payment/gateways/payment-gateway.interface.ts",
+          "hash": "13371217953888044365"
+        },
+        {
+          "file": "apps/api/src/modules/payment/gateways/payment-status.gateway.ts",
+          "hash": "2128780003183247487"
+        },
+        {
+          "file": "apps/api/src/modules/payment/jobs/bulk-refund.processor.ts",
+          "hash": "3277538076060068872"
+        },
+        {
+          "file": "apps/api/src/modules/payment/payment.controller.ts",
+          "hash": "4337362883213870793"
+        },
+        {
+          "file": "apps/api/src/modules/payment/payment.module.ts",
+          "hash": "15961996249410089502"
+        },
+        {
+          "file": "apps/api/src/modules/payment/payment.service.ts",
+          "hash": "3773447120879896015",
+          "deps": [
+            "@eventhub/shared-utils"
+          ]
+        },
+        {
+          "file": "apps/api/src/modules/ticketing/dto/create-order.dto.ts",
+          "hash": "1635266707952354394"
+        },
+        {
+          "file": "apps/api/src/modules/ticketing/dto/validate-ticket.dto.ts",
+          "hash": "13649043950567250887"
+        },
+        {
+          "file": "apps/api/src/modules/ticketing/gateways/order-status.gateway.ts",
+          "hash": "18142139533907947518"
+        },
+        {
+          "file": "apps/api/src/modules/ticketing/gateways/seats.gateway.ts",
+          "hash": "6490057326775822629"
+        },
+        {
+          "file": "apps/api/src/modules/ticketing/jobs/seat-lock.processor.ts",
+          "hash": "10926397941833109192"
+        },
+        {
+          "file": "apps/api/src/modules/ticketing/ticketing.controller.ts",
+          "hash": "18019684816340281063"
+        },
+        {
+          "file": "apps/api/src/modules/ticketing/ticketing.module.ts",
+          "hash": "10886771402586194459"
+        },
+        {
+          "file": "apps/api/src/modules/ticketing/ticketing.service.ts",
+          "hash": "12047506322181178078"
+        },
+        {
+          "file": "apps/api/tsconfig.build.json",
+          "hash": "7380956584978480003"
+        },
+        {
+          "file": "apps/api/tsconfig.json",
+          "hash": "17441521517280221904"
+        }
+      ]
+    },
+    "nonProjectFiles": [
+      {
+        "file": ".env.example",
+        "hash": "17690906824672119979"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "8384936714744981161"
+      },
+      {
+        "file": ".prettierrc",
+        "hash": "5265871919894009"
+      },
+      {
+        "file": "README.md",
+        "hash": "10895712660986970330"
+      },
+      {
+        "file": "docker-compose.yml",
+        "hash": "17401572333385378479"
+      },
+      {
+        "file": "nixpacks.toml",
+        "hash": "5108406967513224527"
+      },
+      {
+        "file": "nx.json",
+        "hash": "2087190354239412229"
+      },
+      {
+        "file": "package.json",
+        "hash": "10720621007434473641"
+      },
+      {
+        "file": "pnpm-workspace.yaml",
+        "hash": "3364563017719869349"
+      },
+      {
+        "file": "prisma/schema.prisma",
+        "hash": "1433810697240829235"
+      },
+      {
+        "file": "railway.json",
+        "hash": "1344375018158597485"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "12145329683215452849"
+      }
+    ]
+  }
+}
