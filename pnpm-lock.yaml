@@ -40,8 +40,8 @@ importers:
         specifier: workspace:*
         version: link:../../libs/shared-utils
       '@fastify/cookie':
-        specifier: ^9.3.1
-        version: 9.4.0
+        specifier: ^10.0.0
+        version: 10.0.1
       '@nestjs/bull':
         specifier: ^10.2.1
         version: 10.2.3(@nestjs/common@11.1.17(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.17)(bull@4.16.5)
@@ -1542,8 +1542,8 @@ packages:
   '@fastify/busboy@3.2.0':
     resolution: {integrity: sha512-m9FVDXU3GT2ITSe0UaMA5rU3QkfC/UXtCU8y0gSN/GugTqtVldOBWIB5V6V3sbmenVZUIpU6f+mPEO2+m5iTaA==}
 
-  '@fastify/cookie@9.4.0':
-    resolution: {integrity: sha512-Th+pt3kEkh4MQD/Q2q1bMuJIB5NX/D5SwSpOKu3G/tjoGbwfpurIMJsWSPS0SJJ4eyjtmQ8OipDQspf8RbUOlg==}
+  '@fastify/cookie@10.0.1':
+    resolution: {integrity: sha512-NV/wbCUv4ETJ5KM1KMu0fLx0nSCm9idIxwg66NZnNbfPQH3rdbx6k0qRs5uy0y+MhBgvDudYRA30KlK659chyw==}
 
   '@fastify/cors@11.2.0':
     resolution: {integrity: sha512-LbLHBuSAdGdSFZYTLVA3+Ch2t+sA6nq3Ejc6XLAKiQ6ViS2qFnvicpj0htsx03FyYeLs04HfRNBsz/a8SvbcUw==}
@@ -3807,9 +3807,6 @@ packages:
   fast-xml-parser@5.5.9:
     resolution: {integrity: sha512-jldvxr1MC6rtiZKgrFnDSvT8xuH+eJqxqOBThUVjYrxssYTo1avZLGql5l0a0BAERR01CadYzZ83kVEkbyDg+g==}
     hasBin: true
-
-  fastify-plugin@4.5.1:
-    resolution: {integrity: sha512-stRHYGeuqpEZTL1Ef0Ovr2ltazUT9g844X5z/zEBFLG8RYlpDiOCIG+ATvYEp+/zmc7sN29mcIMp8gvYplYPIQ==}
 
   fastify-plugin@5.1.0:
     resolution: {integrity: sha512-FAIDA8eovSt5qcDgcBvDuX/v0Cjz0ohGhENZ/wpc3y+oZCY2afZ9Baqql3g/lC+OHRnciQol4ww7tuthOb9idw==}
@@ -7889,10 +7886,10 @@ snapshots:
 
   '@fastify/busboy@3.2.0': {}
 
-  '@fastify/cookie@9.4.0':
+  '@fastify/cookie@10.0.1':
     dependencies:
       cookie-signature: 1.2.2
-      fastify-plugin: 4.5.1
+      fastify-plugin: 5.1.0
 
   '@fastify/cors@11.2.0':
     dependencies:
@@ -10527,8 +10524,6 @@ snapshots:
       path-expression-matcher: 1.2.0
       strnum: 2.2.2
     optional: true
-
-  fastify-plugin@4.5.1: {}
 
   fastify-plugin@5.1.0: {}
 
