@@ -115,7 +115,7 @@ export class TicketingService {
     });
 
     if (!event) throw new NotFoundException('EVENT_NOT_FOUND');
-    if ([EventStatus.DRAFT, EventStatus.CANCELLED].includes(event.status)) {
+    if (event.status === EventStatus.DRAFT || event.status === EventStatus.CANCELLED) {
       throw new NotFoundException('EVENT_UNAVAILABLE');
     }
 

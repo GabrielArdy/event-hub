@@ -33,6 +33,6 @@ export class RegisterDto {
   password_confirm: string;
 
   @ApiProperty({ enum: ['END_USER', 'ORGANIZER'] })
-  @IsEnum([Role.END_USER, Role.ORGANIZER])
-  role: Role.END_USER | Role.ORGANIZER;
+  @IsEnum(['END_USER', 'ORGANIZER'])
+  role: 'END_USER' | 'ORGANIZER';
 }

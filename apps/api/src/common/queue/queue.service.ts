@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bull';
-import { Queue, JobsOptions } from 'bull';
+import { Queue, JobOptions } from 'bull';
 
 export type JobName =
   | 'send-verification-email'
@@ -16,7 +16,7 @@ export type JobName =
   | 'send-event-postponed-notification'
   | 'send-login-alert';
 
-const DEFAULT_JOB_OPTIONS: JobsOptions = {
+const DEFAULT_JOB_OPTIONS: JobOptions = {
   attempts: 3,
   backoff: { type: 'exponential', delay: 5000 },
   removeOnComplete: 100,
@@ -31,7 +31,7 @@ export class QueueService {
     @InjectQueue('tickets') private tktQueue: Queue,
   ) {}
 
-  async add(jobName: JobName, data: Record<string, unknown>, opts?: JobsOptions) {
+  async add(jobName: JobName, data: Record<string, unknown>, opts?: JobOptions) {
     const queue = this.getQueue(jobName);
     return queue.add(jobName, data, { ...DEFAULT_JOB_OPTIONS, ...opts });
   }
