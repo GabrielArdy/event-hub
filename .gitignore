@@ -18,7 +18,4 @@ Thumbs.db
 .idea/
 .vscode/settings.json
 
-# Prisma
-prisma/migrations/*.sql
-
 .claude/
