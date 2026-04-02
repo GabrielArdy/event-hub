@@ -1,0 +1,8 @@
+{
+  "build": {
+    "cmd": "pnpm run build"
+  },
+  "start": {
+    "cmd": "pnpm run start"
+  }
+}
