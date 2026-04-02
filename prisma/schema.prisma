@@ -1,0 +1,461 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── ENUMS ──────────────────────────────────────────────────────────────────
+
+enum Role {
+  END_USER
+  ORGANIZER
+  STAFF
+  ADMIN
+}
+
+enum OrgType {
+  COMMUNITY
+  COMPANY
+  INDIVIDUAL
+  PROMOTER
+}
+
+enum OrgApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum EventStatus {
+  DRAFT
+  PUBLISHED
+  ONGOING
+  COMPLETED
+  CANCELLED
+  POSTPONED
+}
+
+enum EventCategory {
+  MUSIC
+  SEMINAR
+  SPORT
+  EXHIBITION
+  COMEDY
+  OTHER
+}
+
+enum VenueType {
+  PHYSICAL
+  ONLINE
+}
+
+enum LayoutType {
+  SEAT_MAP
+  ZONE
+}
+
+enum SeatStatus {
+  AVAILABLE
+  LOCKED
+  SOLD
+  UNAVAILABLE
+}
+
+enum TicketStatus {
+  PENDING_PAYMENT
+  ACTIVE
+  USED
+  EXPIRED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  BANK_TRANSFER
+  CREDIT_CARD
+  GOPAY
+  OVO
+  DANA
+  SHOPEEPAY
+}
+
+enum PaymentStatus {
+  WAITING_PAYMENT
+  PAID
+  FAILED
+  EXPIRED
+  REFUNDED
+}
+
+enum RefundPolicy {
+  NO_REFUND
+  FULL_REFUND
+  PARTIAL_REFUND
+}
+
+enum RefundStatus {
+  PENDING
+  APPROVED
+  PROCESSING
+  COMPLETED
+  REJECTED
+}
+
+enum FeeBearer {
+  BUYER
+  ORGANIZER
+}
+
+enum PayoutStatus {
+  PENDING
+  ELIGIBLE
+  PROCESSING
+  COMPLETED
+  ON_HOLD
+}
+
+// ─── MODELS ─────────────────────────────────────────────────────────────────
+
+model User {
+  id           String    @id @default(uuid())
+  fullName     String
+  email        String    @unique
+  passwordHash String
+  role         Role      @default(END_USER)
+  avatarUrl    String?
+  isVerified   Boolean   @default(false)
+  verifiedAt   DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  organizer     OrgProfile?
+  tickets       Ticket[]
+  orders        Order[]
+  wishlist      Wishlist[]
+  refreshTokens RefreshToken[]
+  loginAttempts LoginAttempt[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String    @id @default(uuid())
+  userId    String
+  token     String    @unique
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("refresh_tokens")
+}
+
+model LoginAttempt {
+  id        String   @id @default(uuid())
+  userId    String
+  ipAddress String
+  success   Boolean
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("login_attempts")
+}
+
+model VerificationToken {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  type      String   // EMAIL_VERIFICATION | PASSWORD_RESET
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+
+  @@map("verification_tokens")
+}
+
+model OrgProfile {
+  id          String    @id @default(uuid())
+  userId      String    @unique
+  orgName     String
+  orgType     OrgType
+  phone       String
+  isVerified  Boolean   @default(false)
+  verifiedAt  DateTime?
+  verifiedBy  String?
+  bankAccount Json?     // { bankName, accountName, accountNo, bankCode }
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user         User             @relation(fields: [userId], references: [id])
+  applications OrgApplication[]
+  events       Event[]
+
+  @@map("org_profiles")
+}
+
+model OrgApplication {
+  id           String               @id @default(uuid())
+  orgId        String
+  status       OrgApplicationStatus @default(PENDING)
+  docUrl       String               // URL ke storage (KTP/SIUP)
+  rejectedNote String?
+  reviewedBy   String?
+  reviewedAt   DateTime?
+  createdAt    DateTime             @default(now())
+
+  org OrgProfile @relation(fields: [orgId], references: [id])
+
+  @@map("org_applications")
+}
+
+model Event {
+  id             String        @id @default(uuid())
+  orgId          String
+  title          String
+  description    String
+  category       EventCategory
+  status         EventStatus   @default(DRAFT)
+  startAt        DateTime
+  endAt          DateTime
+  bannerUrl      String?
+  maxCapacity    Int
+  venueType      VenueType
+  venueName      String?
+  venueAddress   String?
+  venueCity      String?
+  venueLat       Float?
+  venueLng       Float?
+  onlineUrl      String?
+  cancelReason   String?
+  postponeReason String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  org           OrgProfile      @relation(fields: [orgId], references: [id])
+  ticketTypes   TicketType[]
+  layout        EventLayout?
+  paymentConfig PaymentConfig?
+  payout        Payout?
+  orders        Order[]
+  wishlists     Wishlist[]
+
+  @@map("events")
+}
+
+model EventLayout {
+  id        String     @id @default(uuid())
+  eventId   String     @unique
+  type      LayoutType
+  data      Json       // seat map rows/seats atau zone config
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@map("event_layouts")
+}
+
+model TicketType {
+  id          String   @id @default(uuid())
+  eventId     String
+  name        String
+  description String?
+  priceIdr    Int
+  quota       Int
+  quotaSold   Int      @default(0)
+  saleStartAt DateTime
+  saleEndAt   DateTime
+  maxPerUser  Int      @default(5)
+  isActive    Boolean  @default(true)
+  zoneId      String?  // ref ke zone di EventLayout.data jika ZONE
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  event      Event       @relation(fields: [eventId], references: [id])
+  tickets    Ticket[]
+  orderItems OrderItem[]
+
+  @@map("ticket_types")
+}
+
+model PaymentConfig {
+  id             String          @id @default(uuid())
+  eventId        String          @unique
+  paymentMethods PaymentMethod[]
+  feeBearer      FeeBearer       @default(BUYER)
+  refundPolicy   RefundPolicy    @default(NO_REFUND)
+  refundPercent  Int?            // null kecuali PARTIAL_REFUND
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@map("payment_configs")
+}
+
+model Order {
+  id             String       @id @default(uuid())
+  userId         String
+  eventId        String
+  status         TicketStatus @default(PENDING_PAYMENT)
+  expiresAt      DateTime
+  subtotalIdr    Int
+  platformFeeIdr Int
+  gatewayFeeIdr  Int
+  totalIdr       Int
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  user    User        @relation(fields: [userId], references: [id])
+  event   Event       @relation(fields: [eventId], references: [id])
+  items   OrderItem[]
+  tickets Ticket[]
+  payment Payment?
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id           String   @id @default(uuid())
+  orderId      String
+  ticketTypeId String
+  quantity     Int
+  unitPriceIdr Int
+  subtotalIdr  Int
+  seats        String[] // seat numbers jika SEAT_MAP
+  createdAt    DateTime @default(now())
+
+  order      Order      @relation(fields: [orderId], references: [id])
+  ticketType TicketType @relation(fields: [ticketTypeId], references: [id])
+
+  @@map("order_items")
+}
+
+model Ticket {
+  id           String       @id @default(uuid())
+  orderId      String
+  userId       String
+  ticketTypeId String
+  status       TicketStatus @default(PENDING_PAYMENT)
+  seatNumber   String?      // null jika ZONE
+  zoneId       String?      // null jika SEAT_MAP
+  qrToken      String       @unique // HMAC-signed opaque token
+  checkinAt    DateTime?
+  checkinBy    String?      // staf user_id
+  purchasedAt  DateTime?
+  usedAt       DateTime?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  order       Order        @relation(fields: [orderId], references: [id])
+  user        User         @relation(fields: [userId], references: [id])
+  ticketType  TicketType   @relation(fields: [ticketTypeId], references: [id])
+  refundItems RefundItem[]
+
+  @@map("tickets")
+}
+
+model Payment {
+  id             String        @id @default(uuid())
+  orderId        String        @unique
+  method         PaymentMethod
+  status         PaymentStatus @default(WAITING_PAYMENT)
+  amountIdr      Int
+  gatewayRef     String?       // transaction ID dari gateway
+  vaNumber       String?       // jika BANK_TRANSFER
+  bankCode       String?
+  redirectUrl    String?       // jika ewallet
+  expiresAt      DateTime
+  paidAt         DateTime?
+  idempotencyKey String?       @unique
+  rawWebhook     Json?         // raw payload dari gateway untuk audit
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  order Order @relation(fields: [orderId], references: [id])
+
+  @@map("payments")
+}
+
+model RefundRequest {
+  id           String       @id @default(uuid())
+  userId       String
+  eventId      String
+  status       RefundStatus @default(PENDING)
+  reason       String
+  totalIdr     Int
+  refundMethod String       @default("ORIGINAL")
+  rejectedNote String?
+  submittedAt  DateTime     @default(now())
+  processedAt  DateTime?
+  completedAt  DateTime?
+
+  items RefundItem[]
+
+  @@map("refund_requests")
+}
+
+model RefundItem {
+  id              String @id @default(uuid())
+  refundRequestId String
+  ticketId        String
+  amountIdr       Int
+
+  refundRequest RefundRequest @relation(fields: [refundRequestId], references: [id])
+  ticket        Ticket        @relation(fields: [ticketId], references: [id])
+
+  @@map("refund_items")
+}
+
+model Payout {
+  id              String       @id @default(uuid())
+  eventId         String       @unique
+  status          PayoutStatus @default(PENDING)
+  eligibleAt      DateTime
+  revenueGrossIdr Int
+  platformFeeIdr  Int
+  gatewayFeeIdr   Int
+  refundTotalIdr  Int          @default(0)
+  revenueNetIdr   Int
+  payoutAmountIdr Int
+  holdReason      String?
+  completedAt     DateTime?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@map("payouts")
+}
+
+model Wishlist {
+  id        String   @id @default(uuid())
+  userId    String
+  eventId   String
+  createdAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id])
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@unique([userId, eventId])
+  @@map("wishlists")
+}
+
+model Notification {
+  id        String    @id @default(uuid())
+  userId    String
+  type      String
+  title     String
+  body      String
+  data      Json?
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@map("notifications")
+}

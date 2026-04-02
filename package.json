@@ -1,0 +1,29 @@
+{
+  "name": "eventhub",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev:api": "pnpm --filter @eventhub/api dev",
+    "dev:web": "pnpm --filter @eventhub/web dev",
+    "build:api": "pnpm --filter @eventhub/api build",
+    "build:web": "pnpm --filter @eventhub/web build",
+    "build:libs": "pnpm --filter @eventhub/shared-types build && pnpm --filter @eventhub/shared-utils build",
+    "build:railway": "pnpm run build:libs && pnpm exec prisma generate --schema=prisma/schema.prisma && pnpm --filter @eventhub/api build",
+    "db:migrate": "prisma migrate dev",
+    "db:generate": "prisma generate",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:studio": "prisma studio",
+    "lint": "nx run-many --target=lint --all",
+    "test": "nx run-many --target=test --all",
+    "format": "prettier --write \"**/*.{ts,js,json,html,scss}\""
+  },
+  "devDependencies": {
+    "@nx/eslint": "^19.0.0",
+    "@nx/js": "^19.0.0",
+    "@nx/workspace": "^19.0.0",
+    "nx": "^19.0.0",
+    "prettier": "^3.3.0",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0"
+  }
+}

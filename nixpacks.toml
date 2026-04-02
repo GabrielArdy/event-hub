@@ -1,0 +1,8 @@
+[phases.install]
+cmds = ["pnpm install --frozen-lockfile"]
+
+[phases.build]
+cmds = ["pnpm run build:railway"]
+
+[start]
+cmd = "pnpm exec prisma migrate deploy --schema=prisma/schema.prisma && node apps/api/dist/main.js"
