@@ -8,6 +8,7 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { OrganizerStore } from '../../store/organizer.store';
 import { OrganizerApiService, ActivityFeedItem, EventLiveStats } from '../../services/organizer-api.service';
@@ -18,7 +19,7 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
 @Component({
   selector: 'app-event-dashboard',
   standalone: true,
-  imports: [RouterLink, ButtonModule, ProgressBarModule, BadgeModule, SkeletonModule, DialogModule, InputTextModule, MessageModule, DatePipe, IdrCurrencyPipe],
+  imports: [RouterLink, ButtonModule, ProgressBarModule, BadgeModule, SkeletonModule, DialogModule, InputTextModule, MessageModule, DatePipe, FormsModule, IdrCurrencyPipe],
   styles: [`
     .page { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
     .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
@@ -129,7 +130,7 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
       }
       <div style="display: flex; flex-direction: column; gap: 12px;">
         <label style="font-size: 0.875rem; font-weight: 500;">Kode QR atau Nomor Tiket</label>
-        <input pInputText [(ngModel)]="scanInput" placeholder="Scan atau ketik kode tiket..."
+        <input pInputText [ngModel]="scanInput()" (ngModelChange)="scanInput.set($event)" placeholder="Scan atau ketik kode tiket..."
           (keydown.enter)="doScan()" style="width: 100%" />
         <button pButton type="button" label="Validasi" [loading]="isScanning()"
           (click)="doScan()"

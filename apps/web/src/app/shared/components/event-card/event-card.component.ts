@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { EventSummary } from '@eventhub/shared-types';
@@ -8,7 +9,7 @@ import { IdrCurrencyPipe } from '../../pipes/idr-currency.pipe';
 @Component({
   selector: 'app-event-card',
   standalone: true,
-  imports: [RouterLink, ButtonModule, TagModule, IdrCurrencyPipe],
+  imports: [RouterLink, ButtonModule, TagModule, DatePipe, IdrCurrencyPipe],
   styles: [`
     .event-card {
       background: #fff;

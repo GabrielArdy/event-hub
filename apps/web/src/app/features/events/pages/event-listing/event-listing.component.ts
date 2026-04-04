@@ -228,7 +228,6 @@ export class EventListingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.eventsStore.loadFromStorage?.();
     const params = this.route.snapshot.queryParams;
     if (params['category']) this.selectedCategory.set(params['category']);
     if (params['city']) this.selectedCity = params['city'];

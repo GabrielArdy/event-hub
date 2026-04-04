@@ -44,7 +44,7 @@ import { EventSummary } from '@eventhub/shared-types';
         <div class="events-grid">
           @for (event of wishlist(); track event.event_id) {
             <app-event-card
-              [event]="$any({...event, is_wishlisted: true})"
+              [event]="toWishlistCardEvent(event)"
               (wishlistToggled)="removeFromWishlist($event)"
             />
           }
@@ -58,6 +58,10 @@ export class WishlistComponent implements OnInit {
 
   readonly isLoading = signal(false);
   readonly wishlist = signal<EventSummary[]>([]);
+
+  toWishlistCardEvent(event: EventSummary): EventSummary & { is_wishlisted: boolean } {
+    return { ...event, is_wishlisted: true };
+  }
 
   ngOnInit() {
     this.isLoading.set(true);

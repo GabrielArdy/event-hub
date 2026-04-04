@@ -9,8 +9,9 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { StepsModule } from 'primeng/steps';
 import { MessageModule } from 'primeng/message';
-import { TextareaModule } from 'primeng/textarea';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 import { OrganizerStore } from '../../store/organizer.store';
 import { OrganizerApiService } from '../../services/organizer-api.service';
 import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
@@ -31,8 +32,8 @@ const CATEGORIES = [
   imports: [
     ReactiveFormsModule, FormsModule, RouterLink,
     ButtonModule, InputTextModule, InputNumberModule, RadioButtonModule, DropdownModule,
-    CalendarModule, StepsModule, MessageModule, TextareaModule,
-    IdrCurrencyPipe,
+    CalendarModule, StepsModule, MessageModule, InputTextareaModule,
+    DatePipe, IdrCurrencyPipe,
   ],
   styles: [`
     .page { max-width: 800px; margin: 0 auto; padding: 32px 24px; }
@@ -90,7 +91,7 @@ const CATEGORIES = [
 
               <div class="field">
                 <label>Deskripsi *</label>
-                <textarea pTextarea formControlName="description" rows="6"
+                <textarea pInputTextarea formControlName="description" rows="6"
                   placeholder="Ceritakan tentang acara kamu..." style="width: 100%"></textarea>
                 @if (step1Form.get('description')?.invalid && step1Form.get('description')?.touched) {
                   <span class="error-text">Deskripsi minimal 50 karakter</span>
