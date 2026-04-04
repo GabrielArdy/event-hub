@@ -10,82 +10,97 @@ import { AuthStore } from '../../../features/auth/store/auth.store';
   selector: 'app-navbar',
   standalone: true,
   imports: [RouterLink, RouterLinkActive, ButtonModule, AvatarModule, MenuModule],
-  styles: [`
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: #fff;
-      border-bottom: 1px solid #E5E7EB;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      padding: 0 24px;
-      gap: 16px;
-    }
-    .logo {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #6C63FF;
-      text-decoration: none;
-      flex-shrink: 0;
-    }
-    .search-bar {
-      flex: 1;
-      max-width: 400px;
-      display: flex;
-      align-items: center;
-      background: #F3F4F6;
-      border-radius: 9999px;
-      padding: 8px 16px;
-      gap: 8px;
-      cursor: text;
-    }
-    .search-bar input {
-      border: none;
-      background: transparent;
-      outline: none;
-      font-size: 0.875rem;
-      flex: 1;
-    }
-    .search-bar i { color: #6B7280; }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-left: auto;
-    }
-    .nav-link {
-      text-decoration: none;
-      color: #374151;
-      font-size: 0.875rem;
-      font-weight: 500;
-      padding: 6px 12px;
-      border-radius: 8px;
-      transition: background 0.15s;
-    }
-    .nav-link:hover { background: #F3F4F6; }
-    .nav-link.active { color: #6C63FF; background: #EDE9FE; }
-    .user-menu {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      padding: 4px 8px;
-      border-radius: 9999px;
-      transition: background 0.15s;
-    }
-    .user-menu:hover { background: #F3F4F6; }
-    .user-name {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: #111827;
-    }
-    @media (max-width: 640px) {
-      .search-bar { display: none; }
-      .nav-link { display: none; }
-    }
-  `],
+  styles: [
+    `
+      .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: #fff;
+        border-bottom: 1px solid #e5e7eb;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        padding: 0 24px;
+        gap: 16px;
+      }
+      .logo {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #6c63ff;
+        text-decoration: none;
+        flex-shrink: 0;
+      }
+      .search-bar {
+        flex: 1;
+        max-width: 400px;
+        display: flex;
+        align-items: center;
+        background: #f3f4f6;
+        border-radius: 9999px;
+        padding: 8px 16px;
+        gap: 8px;
+        cursor: text;
+      }
+      .search-bar input {
+        border: none;
+        background: transparent;
+        outline: none;
+        font-size: 0.875rem;
+        flex: 1;
+      }
+      .search-bar i {
+        color: #6b7280;
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: auto;
+      }
+      .nav-link {
+        text-decoration: none;
+        color: #374151;
+        font-size: 0.875rem;
+        font-weight: 500;
+        padding: 6px 12px;
+        border-radius: 8px;
+        transition: background 0.15s;
+      }
+      .nav-link:hover {
+        background: #f3f4f6;
+      }
+      .nav-link.active {
+        color: #6c63ff;
+        background: #ede9fe;
+      }
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 9999px;
+        transition: background 0.15s;
+      }
+      .user-menu:hover {
+        background: #f3f4f6;
+      }
+      .user-name {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #111827;
+      }
+      @media (max-width: 640px) {
+        .search-bar {
+          display: none;
+        }
+        .nav-link {
+          display: none;
+        }
+      }
+    `,
+  ],
   template: `
     <nav class="navbar">
       <a class="logo" routerLink="/">EventHub</a>
@@ -96,7 +111,13 @@ import { AuthStore } from '../../../features/auth/store/auth.store';
       </div>
 
       <div class="nav-links">
-        <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Beranda</a>
+        <a
+          class="nav-link"
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Beranda</a
+        >
 
         @if (authStore.isLoggedIn()) {
           @if (authStore.isOrganizer()) {
@@ -110,7 +131,7 @@ import { AuthStore } from '../../../features/auth/store/auth.store';
             <p-avatar
               [label]="avatarLabel"
               shape="circle"
-              [style]="{'background-color': '#6C63FF', 'color': '#fff'}"
+              [style]="{ 'background-color': '#6C63FF', color: '#fff' }"
             />
             <span class="user-name">{{ authStore.user()?.full_name?.split(' ')[0] }}</span>
             <i class="pi pi-chevron-down" style="font-size: 0.75rem; color: #6B7280;"></i>
@@ -122,7 +143,14 @@ import { AuthStore } from '../../../features/auth/store/auth.store';
             <button pButton type="button" label="Masuk" outlined size="small"></button>
           </a>
           <a routerLink="/auth/register">
-            <button pButton type="button" label="Daftar" size="small" [style.background]="'#6C63FF'" [style.border-color]="'#6C63FF'"></button>
+            <button
+              pButton
+              type="button"
+              label="Daftar"
+              size="small"
+              [style.background]="'#6C63FF'"
+              [style.border-color]="'#6C63FF'"
+            ></button>
           </a>
         }
       </div>

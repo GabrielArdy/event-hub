@@ -20,78 +20,80 @@ import { AuthStore } from '../../store/auth.store';
     MessageModule,
     CardModule,
   ],
-  styles: [`
-    .login-page {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #F9FAFB;
-      padding: 24px;
-    }
-    .login-card {
-      width: 100%;
-      max-width: 420px;
-    }
-    .logo {
-      text-align: center;
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: #6C63FF;
-      margin-bottom: 8px;
-    }
-    .subtitle {
-      text-align: center;
-      color: #6B7280;
-      font-size: 0.875rem;
-      margin-bottom: 24px;
-    }
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 16px;
-    }
-    label {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: #374151;
-    }
-    .error-text {
-      font-size: 0.75rem;
-      color: #EF4444;
-    }
-    .forgot-link {
-      display: block;
-      text-align: right;
-      font-size: 0.875rem;
-      color: #6C63FF;
-      text-decoration: none;
-      margin-top: -8px;
-      margin-bottom: 16px;
-    }
-    .register-link {
-      text-align: center;
-      font-size: 0.875rem;
-      color: #6B7280;
-      margin-top: 16px;
-    }
-    .register-link a {
-      color: #6C63FF;
-      font-weight: 600;
-      text-decoration: none;
-    }
-    .lockout-timer {
-      background: #FEE2E2;
-      border: 1px solid #FECACA;
-      border-radius: 8px;
-      padding: 12px;
-      font-size: 0.875rem;
-      color: #DC2626;
-      margin-bottom: 16px;
-      text-align: center;
-    }
-  `],
+  styles: [
+    `
+      .login-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f9fafb;
+        padding: 24px;
+      }
+      .login-card {
+        width: 100%;
+        max-width: 420px;
+      }
+      .logo {
+        text-align: center;
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #6c63ff;
+        margin-bottom: 8px;
+      }
+      .subtitle {
+        text-align: center;
+        color: #6b7280;
+        font-size: 0.875rem;
+        margin-bottom: 24px;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 16px;
+      }
+      label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #374151;
+      }
+      .error-text {
+        font-size: 0.75rem;
+        color: #ef4444;
+      }
+      .forgot-link {
+        display: block;
+        text-align: right;
+        font-size: 0.875rem;
+        color: #6c63ff;
+        text-decoration: none;
+        margin-top: -8px;
+        margin-bottom: 16px;
+      }
+      .register-link {
+        text-align: center;
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-top: 16px;
+      }
+      .register-link a {
+        color: #6c63ff;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .lockout-timer {
+        background: #fee2e2;
+        border: 1px solid #fecaca;
+        border-radius: 8px;
+        padding: 12px;
+        font-size: 0.875rem;
+        color: #dc2626;
+        margin-bottom: 16px;
+        text-align: center;
+      }
+    `,
+  ],
   template: `
     <div class="login-page">
       <div class="login-card">
@@ -106,11 +108,7 @@ import { AuthStore } from '../../store/auth.store';
         }
 
         @if (authStore.error() && !lockoutRemaining()) {
-          <p-message
-            severity="error"
-            [text]="errorMessage()"
-            styleClass="w-full mb-3"
-          />
+          <p-message severity="error" [text]="errorMessage()" styleClass="w-full mb-3" />
         }
 
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -174,7 +172,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   readonly lockoutLabel = computed(() => {
     const s = this.lockoutRemaining();
-    const m = Math.floor(s / 60).toString().padStart(2, '0');
+    const m = Math.floor(s / 60)
+      .toString()
+      .padStart(2, '0');
     const sec = (s % 60).toString().padStart(2, '0');
     return `${m}:${sec}`;
   });
@@ -182,11 +182,16 @@ export class LoginComponent implements OnInit, OnDestroy {
   readonly errorMessage = computed(() => {
     const code = this.authStore.error();
     switch (code) {
-      case 'INVALID_CREDENTIALS': return 'Email atau password salah.';
-      case 'ACCOUNT_LOCKED': return 'Akun dikunci sementara karena terlalu banyak percobaan login.';
-      case 'ACCOUNT_NOT_VERIFIED': return 'Akun belum diverifikasi. Cek email kamu.';
-      case 'ACCOUNT_INACTIVE': return 'Akun tidak aktif. Hubungi support.';
-      default: return 'Login gagal. Coba lagi.';
+      case 'INVALID_CREDENTIALS':
+        return 'Email atau password salah.';
+      case 'ACCOUNT_LOCKED':
+        return 'Akun dikunci sementara karena terlalu banyak percobaan login.';
+      case 'ACCOUNT_NOT_VERIFIED':
+        return 'Akun belum diverifikasi. Cek email kamu.';
+      case 'ACCOUNT_INACTIVE':
+        return 'Akun tidak aktif. Hubungi support.';
+      default:
+        return 'Login gagal. Coba lagi.';
     }
   });
 

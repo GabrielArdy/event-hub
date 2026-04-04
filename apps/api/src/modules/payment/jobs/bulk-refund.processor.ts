@@ -85,10 +85,7 @@ export class BulkRefundProcessor {
     const D7 = new Date(event.endAt.getTime() + 7 * 24 * 3600 * 1000);
     if (new Date() < D7) return; // Not yet D+7
 
-    const revenueGross = event.ticketTypes.reduce(
-      (sum, tt) => sum + tt.quotaSold * tt.priceIdr,
-      0,
-    );
+    const revenueGross = event.ticketTypes.reduce((sum, tt) => sum + tt.quotaSold * tt.priceIdr, 0);
     const platformFee = Math.ceil(revenueGross * 0.03);
     const revenueNet = revenueGross - platformFee;
 

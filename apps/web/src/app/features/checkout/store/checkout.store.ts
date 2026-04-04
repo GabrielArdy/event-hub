@@ -4,11 +4,21 @@ import { inject, computed } from '@angular/core';
 import { Router } from '@angular/router';
 import { pipe, tap, switchMap, catchError, of } from 'rxjs';
 import { OrderSummary, PaymentDetail, PaymentMethod } from '@eventhub/shared-types';
-import { CheckoutApiService, CreateOrderPayload, InitiatePaymentPayload } from '../services/checkout-api.service';
+import {
+  CheckoutApiService,
+  CreateOrderPayload,
+  InitiatePaymentPayload,
+} from '../services/checkout-api.service';
 import { WsService } from '../../../core/services/ws.service';
 import { AuthStore } from '../../auth/store/auth.store';
 
-type CheckoutStep = 'SELECT_TICKETS' | 'SELECT_PAYMENT' | 'WAITING_PAYMENT' | 'SUCCESS' | 'FAILED' | 'EXPIRED';
+type CheckoutStep =
+  | 'SELECT_TICKETS'
+  | 'SELECT_PAYMENT'
+  | 'WAITING_PAYMENT'
+  | 'SUCCESS'
+  | 'FAILED'
+  | 'EXPIRED';
 
 interface SelectedTicket {
   ticket_type_id: string;
@@ -48,9 +58,7 @@ export const CheckoutStore = signalStore(
     subtotal: computed(() =>
       selectedTickets().reduce((sum, t) => sum + t.price_idr * t.quantity, 0),
     ),
-    totalQuantity: computed(() =>
-      selectedTickets().reduce((sum, t) => sum + t.quantity, 0),
-    ),
+    totalQuantity: computed(() => selectedTickets().reduce((sum, t) => sum + t.quantity, 0)),
     platformFee: computed(() => order()?.platform_fee_idr ?? 0),
     grandTotal: computed(() => order()?.total_idr ?? 0),
   })),
@@ -73,16 +81,27 @@ export const CheckoutStore = signalStore(
         });
       },
 
-      updateTicketQuantity(ticket: { ticket_type_id: string; name: string; price_idr: number }, qty: number) {
+      updateTicketQuantity(
+        ticket: { ticket_type_id: string; name: string; price_idr: number },
+        qty: number,
+      ) {
         const existing = store.selectedTickets();
         const idx = existing.findIndex((t) => t.ticket_type_id === ticket.ticket_type_id);
         let updated: SelectedTicket[];
         if (qty === 0) {
           updated = existing.filter((t) => t.ticket_type_id !== ticket.ticket_type_id);
         } else if (idx !== -1) {
-          updated = existing.map((t, i) => i === idx ? { ...t, quantity: qty } : t);
+          updated = existing.map((t, i) => (i === idx ? { ...t, quantity: qty } : t));
         } else {
-          updated = [...existing, { ticket_type_id: ticket.ticket_type_id, ticket_type_name: ticket.name, price_idr: ticket.price_idr, quantity: qty }];
+          updated = [
+            ...existing,
+            {
+              ticket_type_id: ticket.ticket_type_id,
+              ticket_type_name: ticket.name,
+              price_idr: ticket.price_idr,
+              quantity: qty,
+            },
+          ];
         }
         patchState(store, { selectedTickets: updated });
       },

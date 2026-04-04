@@ -11,7 +11,11 @@ import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { OrganizerStore } from '../../store/organizer.store';
-import { OrganizerApiService, ActivityFeedItem, EventLiveStats } from '../../services/organizer-api.service';
+import {
+  OrganizerApiService,
+  ActivityFeedItem,
+  EventLiveStats,
+} from '../../services/organizer-api.service';
 import { AuthStore } from '../../../auth/store/auth.store';
 import { WsService } from '../../../../core/services/ws.service';
 import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
@@ -19,30 +23,142 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
 @Component({
   selector: 'app-event-dashboard',
   standalone: true,
-  imports: [RouterLink, ButtonModule, ProgressBarModule, BadgeModule, SkeletonModule, DialogModule, InputTextModule, MessageModule, DatePipe, FormsModule, IdrCurrencyPipe],
-  styles: [`
-    .page { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
-    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
-    .event-title { font-size: 1.5rem; font-weight: 700; color: #111827; }
-    .status-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #22C55E; margin-right: 8px; animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
-    @media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 640px) { .stats-grid { grid-template-columns: 1fr; } }
-    .stat-card { background: #fff; border-radius: 16px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .stat-label { font-size: 0.875rem; color: #6B7280; margin-bottom: 8px; }
-    .stat-value { font-size: 2rem; font-weight: 700; color: #111827; }
-    .stat-sub { font-size: 0.75rem; color: #6B7280; margin-top: 4px; }
-    .activity-feed { background: #fff; border-radius: 16px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .feed-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid #F9FAFB; }
-    .feed-item:last-child { border-bottom: none; }
-    .feed-dot-green { width: 10px; height: 10px; border-radius: 50%; background: #22C55E; flex-shrink: 0; margin-top: 4px; }
-    .feed-dot-blue { width: 10px; height: 10px; border-radius: 50%; background: #6C63FF; flex-shrink: 0; margin-top: 4px; }
-    .feed-msg { font-size: 0.875rem; color: #374151; flex: 1; }
-    .feed-time { font-size: 0.75rem; color: #9CA3AF; }
-    .capacity-bar-wrap { margin-top: 8px; }
-    .scan-modal input { width: 100%; margin-bottom: 12px; }
-  `],
+  imports: [
+    RouterLink,
+    ButtonModule,
+    ProgressBarModule,
+    BadgeModule,
+    SkeletonModule,
+    DialogModule,
+    InputTextModule,
+    MessageModule,
+    DatePipe,
+    FormsModule,
+    IdrCurrencyPipe,
+  ],
+  styles: [
+    `
+      .page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 32px 24px;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+      }
+      .event-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #111827;
+      }
+      .status-dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #22c55e;
+        margin-right: 8px;
+        animation: pulse 1.5s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+      @media (max-width: 1024px) {
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 640px) {
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .stat-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+      .stat-label {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-bottom: 8px;
+      }
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #111827;
+      }
+      .stat-sub {
+        font-size: 0.75rem;
+        color: #6b7280;
+        margin-top: 4px;
+      }
+      .activity-feed {
+        background: #fff;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+      .feed-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid #f9fafb;
+      }
+      .feed-item:last-child {
+        border-bottom: none;
+      }
+      .feed-dot-green {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #22c55e;
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+      .feed-dot-blue {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #6c63ff;
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+      .feed-msg {
+        font-size: 0.875rem;
+        color: #374151;
+        flex: 1;
+      }
+      .feed-time {
+        font-size: 0.75rem;
+        color: #9ca3af;
+      }
+      .capacity-bar-wrap {
+        margin-top: 8px;
+      }
+      .scan-modal input {
+        width: 100%;
+        margin-bottom: 12px;
+      }
+    `,
+  ],
   template: `
     <div class="page">
       <div class="header">
@@ -53,10 +169,21 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
           </div>
         </div>
         <div style="display: flex; gap: 8px;">
-          <button pButton type="button" label="🔍 Scan Tiket" (click)="openScanModal()"
-            style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"></button>
+          <button
+            pButton
+            type="button"
+            label="🔍 Scan Tiket"
+            (click)="openScanModal()"
+            style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"
+          ></button>
           <a [routerLink]="['../report']">
-            <button pButton type="button" label="📊 Laporan" outlined style="border-radius: 9999px;"></button>
+            <button
+              pButton
+              type="button"
+              label="📊 Laporan"
+              outlined
+              style="border-radius: 9999px;"
+            ></button>
           </a>
         </div>
       </div>
@@ -65,7 +192,9 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-label">Check-in</div>
-          @if (isLoading()) { <p-skeleton height="2rem" /> } @else {
+          @if (isLoading()) {
+            <p-skeleton height="2rem" />
+          } @else {
             <div class="stat-value">{{ stats()?.checkin_count ?? 0 }}</div>
             <div class="stat-sub">/ {{ stats()?.ticket_sold ?? 0 }} tiket terjual</div>
           }
@@ -73,7 +202,9 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
 
         <div class="stat-card">
           <div class="stat-label">Tiket Terjual</div>
-          @if (isLoading()) { <p-skeleton height="2rem" /> } @else {
+          @if (isLoading()) {
+            <p-skeleton height="2rem" />
+          } @else {
             <div class="stat-value" style="color: #6C63FF;">{{ stats()?.ticket_sold ?? 0 }}</div>
             <div class="stat-sub">/ {{ stats()?.total_quota ?? 0 }} total kuota</div>
           }
@@ -81,7 +212,9 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
 
         <div class="stat-card">
           <div class="stat-label">Revenue</div>
-          @if (isLoading()) { <p-skeleton height="2rem" /> } @else {
+          @if (isLoading()) {
+            <p-skeleton height="2rem" />
+          } @else {
             <div class="stat-value" style="color: #22C55E; font-size: 1.25rem;">
               {{ stats()?.revenue_gross_idr | idrCurrency }}
             </div>
@@ -90,8 +223,12 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
 
         <div class="stat-card">
           <div class="stat-label">Kapasitas</div>
-          @if (isLoading()) { <p-skeleton height="2rem" /> } @else {
-            <div class="stat-value" [style.color]="capacityColor()">{{ stats()?.capacity_pct ?? 0 }}%</div>
+          @if (isLoading()) {
+            <p-skeleton height="2rem" />
+          } @else {
+            <div class="stat-value" [style.color]="capacityColor()">
+              {{ stats()?.capacity_pct ?? 0 }}%
+            </div>
             <div class="capacity-bar-wrap">
               <p-progressBar
                 [value]="stats()?.capacity_pct ?? 0"
@@ -117,24 +254,44 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
           <div class="feed-item">
             <div [class]="item.type === 'TICKET_SOLD' ? 'feed-dot-blue' : 'feed-dot-green'"></div>
             <div class="feed-msg">{{ item.message }}</div>
-            <div class="feed-time">{{ item.timestamp | date:'HH:mm' }}</div>
+            <div class="feed-time">{{ item.timestamp | date: 'HH:mm' }}</div>
           </div>
         }
       </div>
     </div>
 
     <!-- Scan Modal -->
-    <p-dialog header="Scan Tiket" [(visible)]="showScanModal" [modal]="true" [style]="{width: '400px'}">
+    <p-dialog
+      header="Scan Tiket"
+      [(visible)]="showScanModal"
+      [modal]="true"
+      [style]="{ width: '400px' }"
+    >
       @if (scanResult()) {
-        <p-message [severity]="scanSuccess() ? 'success' : 'error'" [text]="scanResult()!" styleClass="w-full mb-3" />
+        <p-message
+          [severity]="scanSuccess() ? 'success' : 'error'"
+          [text]="scanResult()!"
+          styleClass="w-full mb-3"
+        />
       }
       <div style="display: flex; flex-direction: column; gap: 12px;">
         <label style="font-size: 0.875rem; font-weight: 500;">Kode QR atau Nomor Tiket</label>
-        <input pInputText [ngModel]="scanInput()" (ngModelChange)="scanInput.set($event)" placeholder="Scan atau ketik kode tiket..."
-          (keydown.enter)="doScan()" style="width: 100%" />
-        <button pButton type="button" label="Validasi" [loading]="isScanning()"
+        <input
+          pInputText
+          [ngModel]="scanInput()"
+          (ngModelChange)="scanInput.set($event)"
+          placeholder="Scan atau ketik kode tiket..."
+          (keydown.enter)="doScan()"
+          style="width: 100%"
+        />
+        <button
+          pButton
+          type="button"
+          label="Validasi"
+          [loading]="isScanning()"
           (click)="doScan()"
-          style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"></button>
+          style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"
+        ></button>
       </div>
     </p-dialog>
   `,
@@ -180,7 +337,11 @@ export class EventDashboardComponent implements OnInit, OnDestroy {
         .on<any>('/ws/organizer', 'TICKET_SOLD')
         .subscribe((msg) => {
           this.feedItems.update((items) => [
-            { type: 'TICKET_SOLD', message: msg.payload?.message ?? 'Tiket baru terjual', timestamp: new Date().toISOString() },
+            {
+              type: 'TICKET_SOLD',
+              message: msg.payload?.message ?? 'Tiket baru terjual',
+              timestamp: new Date().toISOString(),
+            },
             ...items.slice(0, 49),
           ]);
           this.loadStats();
@@ -188,7 +349,11 @@ export class EventDashboardComponent implements OnInit, OnDestroy {
 
       this.wsService.on<any>('/ws/organizer', 'CHECKIN_UPDATE').subscribe((msg) => {
         this.feedItems.update((items) => [
-          { type: 'CHECKIN', message: msg.payload?.message ?? 'Check-in berhasil', timestamp: new Date().toISOString() },
+          {
+            type: 'CHECKIN',
+            message: msg.payload?.message ?? 'Check-in berhasil',
+            timestamp: new Date().toISOString(),
+          },
           ...items.slice(0, 49),
         ]);
         this.loadStats();
@@ -196,7 +361,11 @@ export class EventDashboardComponent implements OnInit, OnDestroy {
 
       this.wsService.on<any>('/ws/organizer', 'CAPACITY_WARNING').subscribe(() => {
         this.feedItems.update((items) => [
-          { type: 'CHECKIN', message: '⚠️ Stok tiket di bawah 10%!', timestamp: new Date().toISOString() },
+          {
+            type: 'CHECKIN',
+            message: '⚠️ Stok tiket di bawah 10%!',
+            timestamp: new Date().toISOString(),
+          },
           ...items.slice(0, 49),
         ]);
       });
@@ -237,10 +406,14 @@ export class EventDashboardComponent implements OnInit, OnDestroy {
         this.isScanning.set(false);
         if (result.status === 'VALID') {
           this.scanSuccess.set(true);
-          this.scanResult.set(`✅ Valid — ${result.holder_name}, ${result.ticket_type}${result.seat ? ', Kursi ' + result.seat : ''}`);
+          this.scanResult.set(
+            `✅ Valid — ${result.holder_name}, ${result.ticket_type}${result.seat ? ', Kursi ' + result.seat : ''}`,
+          );
         } else if (result.status === 'ALREADY_USED') {
           this.scanSuccess.set(false);
-          this.scanResult.set(`❌ Tiket sudah digunakan pada ${result.used_at ? new Date(result.used_at).toLocaleString('id-ID') : '-'}`);
+          this.scanResult.set(
+            `❌ Tiket sudah digunakan pada ${result.used_at ? new Date(result.used_at).toLocaleString('id-ID') : '-'}`,
+          );
         } else {
           this.scanSuccess.set(false);
           this.scanResult.set(`❌ Tiket tidak valid: ${result.message}`);

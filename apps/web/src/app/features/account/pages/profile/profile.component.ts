@@ -1,5 +1,11 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
@@ -19,16 +25,58 @@ function passwordMatchValidator(ctrl: AbstractControl): ValidationErrors | null 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, PasswordModule, AvatarModule, MessageModule, DividerModule, NavbarComponent],
-  styles: [`
-    .page { max-width: 600px; margin: 0 auto; padding: 32px 24px; }
-    .page-title { font-size: 1.5rem; font-weight: 700; color: #111827; margin: 0 0 24px; }
-    .avatar-section { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
-    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
-    label { font-size: 0.875rem; font-weight: 500; color: #374151; }
-    .error-text { font-size: 0.75rem; color: #EF4444; }
-    .section-title { font-size: 1rem; font-weight: 700; color: #111827; margin: 24px 0 16px; }
-  `],
+  imports: [
+    ReactiveFormsModule,
+    ButtonModule,
+    InputTextModule,
+    PasswordModule,
+    AvatarModule,
+    MessageModule,
+    DividerModule,
+    NavbarComponent,
+  ],
+  styles: [
+    `
+      .page {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 32px 24px;
+      }
+      .page-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #111827;
+        margin: 0 0 24px;
+      }
+      .avatar-section {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 16px;
+      }
+      label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #374151;
+      }
+      .error-text {
+        font-size: 0.75rem;
+        color: #ef4444;
+      }
+      .section-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #111827;
+        margin: 24px 0 16px;
+      }
+    `,
+  ],
   template: `
     <app-navbar />
     <div class="page">
@@ -40,10 +88,12 @@ function passwordMatchValidator(ctrl: AbstractControl): ValidationErrors | null 
           [label]="authStore.user()?.full_name?.charAt(0)?.toUpperCase() ?? 'U'"
           size="xlarge"
           shape="circle"
-          [style]="{'background-color': '#6C63FF', 'color': '#fff', 'font-size': '1.5rem'}"
+          [style]="{ 'background-color': '#6C63FF', color: '#fff', 'font-size': '1.5rem' }"
         />
         <div>
-          <div style="font-size: 1rem; font-weight: 700; color: #111827;">{{ authStore.user()?.full_name }}</div>
+          <div style="font-size: 1rem; font-weight: 700; color: #111827;">
+            {{ authStore.user()?.full_name }}
+          </div>
           <div style="font-size: 0.875rem; color: #6B7280;">{{ authStore.user()?.email }}</div>
           <div style="font-size: 0.75rem; color: #6B7280; margin-top: 4px;">
             {{ authStore.user()?.role === 'ORGANIZER' ? 'Event Organizer' : 'Pengguna' }}
@@ -66,11 +116,21 @@ function passwordMatchValidator(ctrl: AbstractControl): ValidationErrors | null 
         </div>
         <div class="field">
           <label>Email</label>
-          <input pInputText [value]="authStore.user()?.email" disabled style="width: 100%; opacity: 0.6;" />
+          <input
+            pInputText
+            [value]="authStore.user()?.email"
+            disabled
+            style="width: 100%; opacity: 0.6;"
+          />
         </div>
-        <button pButton type="submit" label="Simpan Perubahan"
-          [loading]="isSaving()" [disabled]="profileForm.invalid || isSaving()"
-          style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"></button>
+        <button
+          pButton
+          type="submit"
+          label="Simpan Perubahan"
+          [loading]="isSaving()"
+          [disabled]="profileForm.invalid || isSaving()"
+          style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"
+        ></button>
       </form>
 
       <p-divider />
@@ -87,28 +147,58 @@ function passwordMatchValidator(ctrl: AbstractControl): ValidationErrors | null 
       <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
         <div class="field">
           <label for="currentPassword">Password Saat Ini</label>
-          <p-password id="currentPassword" formControlName="currentPassword"
-            [feedback]="false" [toggleMask]="true" styleClass="w-full" inputStyleClass="w-full" />
+          <p-password
+            id="currentPassword"
+            formControlName="currentPassword"
+            [feedback]="false"
+            [toggleMask]="true"
+            styleClass="w-full"
+            inputStyleClass="w-full"
+          />
         </div>
         <div class="field">
           <label for="newPassword">Password Baru</label>
-          <p-password id="newPassword" formControlName="newPassword"
-            [toggleMask]="true" styleClass="w-full" inputStyleClass="w-full" />
-          @if (passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched) {
-            <span class="error-text">Password min. 8 karakter dengan huruf besar, kecil, dan angka</span>
+          <p-password
+            id="newPassword"
+            formControlName="newPassword"
+            [toggleMask]="true"
+            styleClass="w-full"
+            inputStyleClass="w-full"
+          />
+          @if (
+            passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched
+          ) {
+            <span class="error-text"
+              >Password min. 8 karakter dengan huruf besar, kecil, dan angka</span
+            >
           }
         </div>
         <div class="field">
           <label for="confirmPassword">Konfirmasi Password Baru</label>
-          <p-password id="confirmPassword" formControlName="confirmPassword"
-            [feedback]="false" [toggleMask]="true" styleClass="w-full" inputStyleClass="w-full" />
-          @if (passwordForm.errors?.['passwordMismatch'] && passwordForm.get('confirmPassword')?.touched) {
+          <p-password
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            [feedback]="false"
+            [toggleMask]="true"
+            styleClass="w-full"
+            inputStyleClass="w-full"
+          />
+          @if (
+            passwordForm.errors?.['passwordMismatch'] &&
+            passwordForm.get('confirmPassword')?.touched
+          ) {
             <span class="error-text">Password tidak sama</span>
           }
         </div>
-        <button pButton type="submit" label="Ubah Password"
-          [loading]="isPwSaving()" [disabled]="passwordForm.invalid || isPwSaving()"
-          outlined style="border-radius: 9999px;"></button>
+        <button
+          pButton
+          type="submit"
+          label="Ubah Password"
+          [loading]="isPwSaving()"
+          [disabled]="passwordForm.invalid || isPwSaving()"
+          outlined
+          style="border-radius: 9999px;"
+        ></button>
       </form>
     </div>
   `,
@@ -132,7 +222,14 @@ export class ProfileComponent implements OnInit {
   readonly passwordForm = this.fb.group(
     {
       currentPassword: ['', Validators.required],
-      newPassword: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/)]],
+      newPassword: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/),
+        ],
+      ],
       confirmPassword: ['', Validators.required],
     },
     { validators: passwordMatchValidator },
@@ -153,7 +250,10 @@ export class ProfileComponent implements OnInit {
         this.isSaving.set(false);
         this.saveSuccess.set(true);
       },
-      error: () => { this.isSaving.set(false); this.saveError.set('Gagal menyimpan. Coba lagi.'); },
+      error: () => {
+        this.isSaving.set(false);
+        this.saveError.set('Gagal menyimpan. Coba lagi.');
+      },
     });
   }
 
@@ -171,7 +271,11 @@ export class ProfileComponent implements OnInit {
       },
       error: (err) => {
         this.isPwSaving.set(false);
-        this.pwError.set(err.error?.error?.code === 'WRONG_PASSWORD' ? 'Password saat ini salah.' : 'Gagal mengubah password.');
+        this.pwError.set(
+          err.error?.error?.code === 'WRONG_PASSWORD'
+            ? 'Password saat ini salah.'
+            : 'Gagal mengubah password.',
+        );
       },
     });
   }

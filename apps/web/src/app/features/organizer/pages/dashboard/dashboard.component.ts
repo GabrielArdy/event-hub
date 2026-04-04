@@ -13,26 +13,121 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
 @Component({
   selector: 'app-org-dashboard',
   standalone: true,
-  imports: [RouterLink, ButtonModule, CardModule, SkeletonModule, TagModule, DatePipe, StatusBadgeComponent, IdrCurrencyPipe],
-  styles: [`
-    .page { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
-    .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
-    .greeting { font-size: 1.5rem; font-weight: 700; color: #111827; }
-    .subtitle { font-size: 0.875rem; color: #6B7280; margin-top: 4px; }
-    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
-    @media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 640px) { .stats-grid { grid-template-columns: 1fr; } }
-    .stat-card { background: #fff; border-radius: 16px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .stat-label { font-size: 0.875rem; color: #6B7280; margin-bottom: 8px; }
-    .stat-value { font-size: 2rem; font-weight: 700; color: #111827; }
-    .stat-sub { font-size: 0.75rem; color: #6B7280; margin-top: 4px; }
-    .section-title { font-size: 1.125rem; font-weight: 700; color: #111827; margin: 0 0 16px; }
-    .event-row { display: flex; gap: 16px; align-items: center; padding: 16px; background: #fff; border-radius: 12px; margin-bottom: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
-    .event-img { width: 64px; height: 64px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
-    .event-img-ph { width: 64px; height: 64px; border-radius: 8px; background: #F3F4F6; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .event-title { font-weight: 600; color: #111827; font-size: 0.9rem; }
-    .event-meta { font-size: 0.8rem; color: #6B7280; margin-top: 4px; }
-  `],
+  imports: [
+    RouterLink,
+    ButtonModule,
+    CardModule,
+    SkeletonModule,
+    TagModule,
+    DatePipe,
+    StatusBadgeComponent,
+    IdrCurrencyPipe,
+  ],
+  styles: [
+    `
+      .page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 32px 24px;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 32px;
+      }
+      .greeting {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #111827;
+      }
+      .subtitle {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-top: 4px;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+      @media (max-width: 1024px) {
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 640px) {
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .stat-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+      .stat-label {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-bottom: 8px;
+      }
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #111827;
+      }
+      .stat-sub {
+        font-size: 0.75rem;
+        color: #6b7280;
+        margin-top: 4px;
+      }
+      .section-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #111827;
+        margin: 0 0 16px;
+      }
+      .event-row {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        padding: 16px;
+        background: #fff;
+        border-radius: 12px;
+        margin-bottom: 8px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+      }
+      .event-img {
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+        border-radius: 8px;
+        flex-shrink: 0;
+      }
+      .event-img-ph {
+        width: 64px;
+        height: 64px;
+        border-radius: 8px;
+        background: #f3f4f6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .event-title {
+        font-weight: 600;
+        color: #111827;
+        font-size: 0.9rem;
+      }
+      .event-meta {
+        font-size: 0.8rem;
+        color: #6b7280;
+        margin-top: 4px;
+      }
+    `,
+  ],
   template: `
     <div class="page">
       <div class="header">
@@ -41,8 +136,12 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
           <div class="subtitle">Kelola acara dan pantau performa kamu di sini.</div>
         </div>
         <a routerLink="/organizer/events/new">
-          <button pButton type="button" label="+ Buat Event Baru"
-            style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"></button>
+          <button
+            pButton
+            type="button"
+            label="+ Buat Event Baru"
+            style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"
+          ></button>
         </a>
       </div>
 
@@ -78,7 +177,7 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
       <div class="section-title">Event Terbaru</div>
 
       @if (orgStore.isLoading()) {
-        @for (i of [1,2,3]; track i) {
+        @for (i of [1, 2, 3]; track i) {
           <p-skeleton height="96px" styleClass="mb-3" />
         }
       } @else if (orgStore.events().length === 0) {
@@ -87,8 +186,12 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
           <div style="font-weight: 600; color: #374151; margin-bottom: 8px;">Belum ada event</div>
           <p style="font-size: 0.875rem; margin-bottom: 16px;">Buat event pertamamu sekarang!</p>
           <a routerLink="/organizer/events/new">
-            <button pButton type="button" label="Buat Event"
-              style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"></button>
+            <button
+              pButton
+              type="button"
+              label="Buat Event"
+              style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"
+            ></button>
           </a>
         </div>
       } @else {
@@ -101,15 +204,29 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
             }
             <div style="flex: 1; min-width: 0;">
               <div class="event-title">{{ event.title }}</div>
-              <div class="event-meta">{{ event.start_at | date:'d MMM yyyy, HH:mm' }}</div>
+              <div class="event-meta">{{ event.start_at | date: 'd MMM yyyy, HH:mm' }}</div>
             </div>
             <app-status-badge [status]="event.status" />
             <div style="display: flex; gap: 8px; flex-shrink: 0;">
               <a [routerLink]="['/organizer/events', event.event_id, 'dashboard']">
-                <button pButton type="button" icon="pi pi-chart-bar" size="small" outlined title="Live Dashboard"></button>
+                <button
+                  pButton
+                  type="button"
+                  icon="pi pi-chart-bar"
+                  size="small"
+                  outlined
+                  title="Live Dashboard"
+                ></button>
               </a>
               <a [routerLink]="['/organizer/events', event.event_id, 'edit']">
-                <button pButton type="button" icon="pi pi-pencil" size="small" outlined title="Edit"></button>
+                <button
+                  pButton
+                  type="button"
+                  icon="pi pi-pencil"
+                  size="small"
+                  outlined
+                  title="Edit"
+                ></button>
               </a>
             </div>
           </div>
@@ -117,7 +234,13 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
 
         @if (orgStore.events().length > 5) {
           <a routerLink="/organizer/events">
-            <button pButton type="button" label="Lihat Semua Event" text style="margin-top: 8px;"></button>
+            <button
+              pButton
+              type="button"
+              label="Lihat Semua Event"
+              text
+              style="margin-top: 8px;"
+            ></button>
           </a>
         }
       }
@@ -141,7 +264,8 @@ export class OrgDashboardComponent implements OnInit {
   }
 
   completedCount() {
-    return this.orgStore.events().filter((e) => ['COMPLETED', 'CANCELLED'].includes(e.status)).length;
+    return this.orgStore.events().filter((e) => ['COMPLETED', 'CANCELLED'].includes(e.status))
+      .length;
   }
 
   recentEvents() {

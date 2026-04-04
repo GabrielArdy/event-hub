@@ -1,4 +1,10 @@
-export type PaymentMethod = 'BANK_TRANSFER' | 'CREDIT_CARD' | 'GOPAY' | 'OVO' | 'DANA' | 'SHOPEEPAY';
+export type PaymentMethod =
+  | 'BANK_TRANSFER'
+  | 'CREDIT_CARD'
+  | 'GOPAY'
+  | 'OVO'
+  | 'DANA'
+  | 'SHOPEEPAY';
 export type PaymentStatus = 'WAITING_PAYMENT' | 'PAID' | 'FAILED' | 'EXPIRED' | 'REFUNDED';
 export type RefundStatus = 'PENDING' | 'APPROVED' | 'PROCESSING' | 'COMPLETED' | 'REJECTED';
 export type PayoutStatus = 'PENDING' | 'ELIGIBLE' | 'PROCESSING' | 'COMPLETED' | 'ON_HOLD';

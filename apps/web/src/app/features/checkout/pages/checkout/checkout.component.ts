@@ -53,36 +53,181 @@ const PAYMENT_METHODS = [
   selector: 'app-checkout',
   standalone: true,
   imports: [
-    RouterLink, FormsModule,
-    ButtonModule, RadioButtonModule, DividerModule, MessageModule, StepsModule, SkeletonModule, AccordionModule,
-    NavbarComponent, CountdownTimerComponent, IdrCurrencyPipe,
+    RouterLink,
+    FormsModule,
+    ButtonModule,
+    RadioButtonModule,
+    DividerModule,
+    MessageModule,
+    StepsModule,
+    SkeletonModule,
+    AccordionModule,
+    NavbarComponent,
+    CountdownTimerComponent,
+    IdrCurrencyPipe,
   ],
-  styles: [`
-    .page { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
-    .stepper { margin-bottom: 32px; }
-    .event-mini { display: flex; gap: 12px; align-items: center; background: #F9FAFB; border-radius: 12px; padding: 12px 16px; margin-bottom: 24px; }
-    .event-mini img { width: 64px; height: 64px; object-fit: cover; border-radius: 8px; }
-    .event-mini-title { font-weight: 600; color: #111827; font-size: 0.9rem; }
-    .event-mini-date { font-size: 0.8rem; color: #6B7280; }
-    .section-title { font-size: 1.125rem; font-weight: 700; color: #111827; margin: 0 0 16px; }
-    .ticket-row { display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #F9FAFB; border-radius: 10px; margin-bottom: 8px; }
-    .qty-ctrl { display: flex; align-items: center; gap: 12px; }
-    .qty-btn { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid #6C63FF; background: #fff; color: #6C63FF; font-size: 1.125rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-    .qty-btn:disabled { border-color: #D1D5DB; color: #D1D5DB; cursor: not-allowed; }
-    .qty-val { font-weight: 700; font-size: 1rem; min-width: 24px; text-align: center; }
-    .summary-box { background: #fff; border: 1px solid #E5E7EB; border-radius: 12px; padding: 20px; margin-top: 24px; }
-    .summary-row { display: flex; justify-content: space-between; font-size: 0.875rem; color: #374151; margin-bottom: 8px; }
-    .summary-total { display: flex; justify-content: space-between; font-size: 1.125rem; font-weight: 700; color: #111827; padding-top: 12px; border-top: 1px solid #E5E7EB; margin-top: 8px; }
-    .method-option { display: flex; align-items: center; gap: 12px; padding: 14px; border: 2px solid #E5E7EB; border-radius: 12px; cursor: pointer; margin-bottom: 8px; transition: border-color 0.15s; }
-    .method-option.selected { border-color: #6C63FF; background: #EDE9FE; }
-    .provider-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; margin-left: 32px; }
-    .provider-btn { padding: 6px 14px; border: 1.5px solid #E5E7EB; border-radius: 8px; background: #fff; cursor: pointer; font-size: 0.875rem; font-weight: 600; transition: all 0.15s; }
-    .provider-btn.selected { border-color: #6C63FF; background: #6C63FF; color: #fff; }
-    .countdown-wrap { text-align: center; margin: 16px 0; }
-    .countdown-label { font-size: 0.875rem; color: #6B7280; margin-bottom: 4px; }
-    .va-info { background: #EDE9FE; border-radius: 12px; padding: 16px; margin-top: 16px; }
-    .va-number { font-size: 1.5rem; font-weight: 700; letter-spacing: 2px; color: #6C63FF; }
-  `],
+  styles: [
+    `
+      .page {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 32px 24px;
+      }
+      .stepper {
+        margin-bottom: 32px;
+      }
+      .event-mini {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        background: #f9fafb;
+        border-radius: 12px;
+        padding: 12px 16px;
+        margin-bottom: 24px;
+      }
+      .event-mini img {
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+      .event-mini-title {
+        font-weight: 600;
+        color: #111827;
+        font-size: 0.9rem;
+      }
+      .event-mini-date {
+        font-size: 0.8rem;
+        color: #6b7280;
+      }
+      .section-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #111827;
+        margin: 0 0 16px;
+      }
+      .ticket-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px;
+        background: #f9fafb;
+        border-radius: 10px;
+        margin-bottom: 8px;
+      }
+      .qty-ctrl {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .qty-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1.5px solid #6c63ff;
+        background: #fff;
+        color: #6c63ff;
+        font-size: 1.125rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .qty-btn:disabled {
+        border-color: #d1d5db;
+        color: #d1d5db;
+        cursor: not-allowed;
+      }
+      .qty-val {
+        font-weight: 700;
+        font-size: 1rem;
+        min-width: 24px;
+        text-align: center;
+      }
+      .summary-box {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 24px;
+      }
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.875rem;
+        color: #374151;
+        margin-bottom: 8px;
+      }
+      .summary-total {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #111827;
+        padding-top: 12px;
+        border-top: 1px solid #e5e7eb;
+        margin-top: 8px;
+      }
+      .method-option {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        cursor: pointer;
+        margin-bottom: 8px;
+        transition: border-color 0.15s;
+      }
+      .method-option.selected {
+        border-color: #6c63ff;
+        background: #ede9fe;
+      }
+      .provider-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
+        margin-left: 32px;
+      }
+      .provider-btn {
+        padding: 6px 14px;
+        border: 1.5px solid #e5e7eb;
+        border-radius: 8px;
+        background: #fff;
+        cursor: pointer;
+        font-size: 0.875rem;
+        font-weight: 600;
+        transition: all 0.15s;
+      }
+      .provider-btn.selected {
+        border-color: #6c63ff;
+        background: #6c63ff;
+        color: #fff;
+      }
+      .countdown-wrap {
+        text-align: center;
+        margin: 16px 0;
+      }
+      .countdown-label {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-bottom: 4px;
+      }
+      .va-info {
+        background: #ede9fe;
+        border-radius: 12px;
+        padding: 16px;
+        margin-top: 16px;
+      }
+      .va-number {
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: #6c63ff;
+      }
+    `,
+  ],
   template: `
     <app-navbar />
     <div class="page">
@@ -107,7 +252,7 @@ const PAYMENT_METHODS = [
             }
             <div>
               <div class="event-mini-title">{{ event.title }}</div>
-              <div class="event-mini-date">{{ event.start_at | date:'d MMM yyyy, HH:mm' }}</div>
+              <div class="event-mini-date">{{ event.start_at | date: 'd MMM yyyy, HH:mm' }}</div>
             </div>
           </div>
 
@@ -124,22 +269,42 @@ const PAYMENT_METHODS = [
                 <div style="font-size: 0.875rem; color: #6C63FF; font-weight: 700;">
                   {{ tt.price_idr === 0 ? 'Gratis' : (tt.price_idr | idrCurrency) }}
                 </div>
-                <div style="font-size: 0.75rem; color: #6B7280;">{{ tt.quota_remaining }} tersisa</div>
+                <div style="font-size: 0.75rem; color: #6B7280;">
+                  {{ tt.quota_remaining }} tersisa
+                </div>
               </div>
               <div class="qty-ctrl">
-                <button class="qty-btn" type="button"
+                <button
+                  class="qty-btn"
+                  type="button"
                   [disabled]="getQty(tt.ticket_type_id) === 0"
-                  (click)="decrementTicket(tt)">−</button>
+                  (click)="decrementTicket(tt)"
+                >
+                  −
+                </button>
                 <span class="qty-val">{{ getQty(tt.ticket_type_id) }}</span>
-                <button class="qty-btn" type="button"
-                  [disabled]="getQty(tt.ticket_type_id) >= tt.max_per_user || getQty(tt.ticket_type_id) >= tt.quota_remaining || checkoutStore.totalQuantity() >= 5"
-                  (click)="incrementTicket(tt)">+</button>
+                <button
+                  class="qty-btn"
+                  type="button"
+                  [disabled]="
+                    getQty(tt.ticket_type_id) >= tt.max_per_user ||
+                    getQty(tt.ticket_type_id) >= tt.quota_remaining ||
+                    checkoutStore.totalQuantity() >= 5
+                  "
+                  (click)="incrementTicket(tt)"
+                >
+                  +
+                </button>
               </div>
             </div>
           }
 
           @if (checkoutStore.totalQuantity() >= 5) {
-            <p-message severity="warn" text="Maksimal 5 tiket per pengguna per acara." styleClass="w-full mt-2" />
+            <p-message
+              severity="warn"
+              text="Maksimal 5 tiket per pengguna per acara."
+              styleClass="w-full mt-2"
+            />
           }
         }
 
@@ -159,18 +324,22 @@ const PAYMENT_METHODS = [
             </div>
             <div class="summary-total">
               <span>Estimasi Total</span>
-              <span style="color: #6C63FF;">{{ (checkoutStore.subtotal() + platformFeeEstimate()) | idrCurrency }}</span>
+              <span style="color: #6C63FF;">{{
+                checkoutStore.subtotal() + platformFeeEstimate() | idrCurrency
+              }}</span>
             </div>
           </div>
         }
 
-        <button pButton type="button" label="Lanjut ke Pembayaran →"
+        <button
+          pButton
+          type="button"
+          label="Lanjut ke Pembayaran →"
           [disabled]="checkoutStore.totalQuantity() === 0 || checkoutStore.isLoading()"
           [loading]="checkoutStore.isLoading()"
           (click)="proceedToPayment()"
-          style="width: 100%; margin-top: 24px; border-radius: 9999px; background: #6C63FF; border-color: #6C63FF; font-size: 1rem; padding: 14px 0;">
-        </button>
-
+          style="width: 100%; margin-top: 24px; border-radius: 9999px; background: #6C63FF; border-color: #6C63FF; font-size: 1rem; padding: 14px 0;"
+        ></button>
       } @else if (checkoutStore.step() === 'SELECT_PAYMENT') {
         <!-- STEP 2: PAYMENT METHOD -->
         @if (checkoutStore.order()) {
@@ -178,8 +347,10 @@ const PAYMENT_METHODS = [
 
           <div class="event-mini" style="margin-bottom: 24px;">
             <div>
-              <div class="event-mini-title">Ringkasan Order #{{ order.order_id.slice(0,8) }}</div>
-              <div class="event-mini-date">Kadaluarsa: {{ order.expires_at | date:'d MMM yyyy, HH:mm' }}</div>
+              <div class="event-mini-title">Ringkasan Order #{{ order.order_id.slice(0, 8) }}</div>
+              <div class="event-mini-date">
+                Kadaluarsa: {{ order.expires_at | date: 'd MMM yyyy, HH:mm' }}
+              </div>
             </div>
           </div>
 
@@ -191,8 +362,12 @@ const PAYMENT_METHODS = [
                 <span>{{ item.subtotal_idr | idrCurrency }}</span>
               </div>
             }
-            <div class="summary-row"><span>Platform fee (3%)</span><span>{{ order.platform_fee_idr | idrCurrency }}</span></div>
-            <div class="summary-row"><span>Biaya gateway</span><span>{{ order.gateway_fee_idr | idrCurrency }}</span></div>
+            <div class="summary-row">
+              <span>Platform fee (3%)</span><span>{{ order.platform_fee_idr | idrCurrency }}</span>
+            </div>
+            <div class="summary-row">
+              <span>Biaya gateway</span><span>{{ order.gateway_fee_idr | idrCurrency }}</span>
+            </div>
             <div class="summary-total">
               <span>Total Bayar</span>
               <span style="color: #6C63FF;">{{ order.total_idr | idrCurrency }}</span>
@@ -211,9 +386,16 @@ const PAYMENT_METHODS = [
           }
 
           @for (pm of paymentMethods; track pm.method) {
-            <div class="method-option" [class.selected]="checkoutStore.selectedMethod() === pm.method"
-              (click)="selectMethod(pm)">
-              <p-radioButton [name]="'method'" [value]="pm.method" [(ngModel)]="selectedMethodModel" />
+            <div
+              class="method-option"
+              [class.selected]="checkoutStore.selectedMethod() === pm.method"
+              (click)="selectMethod(pm)"
+            >
+              <p-radioButton
+                [name]="'method'"
+                [value]="pm.method"
+                [(ngModel)]="selectedMethodModel"
+              />
               <i [class]="'pi ' + pm.icon" style="color: #6C63FF;"></i>
               <span style="font-weight: 500; font-size: 0.9rem;">{{ pm.label }}</span>
             </div>
@@ -221,9 +403,12 @@ const PAYMENT_METHODS = [
             @if (checkoutStore.selectedMethod() === pm.method && pm.providers.length > 0) {
               <div class="provider-grid">
                 @for (prov of pm.providers; track prov) {
-                  <button class="provider-btn" type="button"
+                  <button
+                    class="provider-btn"
+                    type="button"
                     [class.selected]="checkoutStore.selectedProvider() === prov"
-                    (click)="selectProvider(prov)">
+                    (click)="selectProvider(prov)"
+                  >
                     {{ prov }}
                   </button>
                 }
@@ -231,14 +416,16 @@ const PAYMENT_METHODS = [
             }
           }
 
-          <button pButton type="button" label="Bayar Sekarang"
+          <button
+            pButton
+            type="button"
+            label="Bayar Sekarang"
             [disabled]="!checkoutStore.selectedMethod() || checkoutStore.isLoading()"
             [loading]="checkoutStore.isLoading()"
             (click)="pay()"
-            style="width: 100%; margin-top: 24px; border-radius: 9999px; background: #6C63FF; border-color: #6C63FF; font-size: 1rem; padding: 14px 0;">
-          </button>
+            style="width: 100%; margin-top: 24px; border-radius: 9999px; background: #6C63FF; border-color: #6C63FF; font-size: 1rem; padding: 14px 0;"
+          ></button>
         }
-
       } @else if (checkoutStore.step() === 'WAITING_PAYMENT') {
         <!-- WAITING PAYMENT -->
         @if (checkoutStore.payment()) {
@@ -253,17 +440,35 @@ const PAYMENT_METHODS = [
 
             @if (payment.virtual_account) {
               <div class="va-info" style="text-align: left; margin-top: 24px;">
-                <div style="font-size: 0.875rem; color: #6B7280; margin-bottom: 4px;">{{ payment.virtual_account.bank_name }}</div>
+                <div style="font-size: 0.875rem; color: #6B7280; margin-bottom: 4px;">
+                  {{ payment.virtual_account.bank_name }}
+                </div>
                 <div class="va-number">{{ payment.virtual_account.va_number }}</div>
-                <button pButton type="button" label="Salin" icon="pi pi-copy" text size="small"
-                  (click)="copyVa(payment.virtual_account.va_number)" style="margin-top: 8px;"></button>
+                <button
+                  pButton
+                  type="button"
+                  label="Salin"
+                  icon="pi pi-copy"
+                  text
+                  size="small"
+                  (click)="copyVa(payment.virtual_account.va_number)"
+                  style="margin-top: 8px;"
+                ></button>
               </div>
             }
 
             @if (payment.redirect_url) {
-              <a [href]="payment.redirect_url" target="_blank" style="display: block; margin-top: 16px;">
-                <button pButton type="button" label="Bayar via App"
-                  style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"></button>
+              <a
+                [href]="payment.redirect_url"
+                target="_blank"
+                style="display: block; margin-top: 16px;"
+              >
+                <button
+                  pButton
+                  type="button"
+                  label="Bayar via App"
+                  style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"
+                ></button>
               </a>
             }
 
@@ -285,10 +490,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   readonly paymentMethods = PAYMENT_METHODS;
   selectedMethodModel: PaymentMethod | null = null;
 
-  readonly stepItems = [
-    { label: 'Pilih Tiket' },
-    { label: 'Pembayaran' },
-  ];
+  readonly stepItems = [{ label: 'Pilih Tiket' }, { label: 'Pembayaran' }];
 
   readonly activeStepIndex = computed(() => {
     const step = this.checkoutStore.step();
@@ -299,11 +501,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   readonly errorMessage = computed(() => {
     const code = this.checkoutStore.error();
     switch (code) {
-      case 'USER_QUOTA_EXCEEDED': return 'Kamu sudah memiliki tiket untuk acara ini (maks. 5).';
-      case 'SEAT_LOCKED': return 'Kursi yang kamu pilih sudah diambil orang lain. Pilih kursi lain.';
-      case 'TICKET_SOLD_OUT': return 'Tiket sudah habis.';
-      case 'PAYMENT_INIT_FAILED': return 'Gagal membuat pembayaran. Coba lagi.';
-      default: return 'Terjadi kesalahan. Coba lagi.';
+      case 'USER_QUOTA_EXCEEDED':
+        return 'Kamu sudah memiliki tiket untuk acara ini (maks. 5).';
+      case 'SEAT_LOCKED':
+        return 'Kursi yang kamu pilih sudah diambil orang lain. Pilih kursi lain.';
+      case 'TICKET_SOLD_OUT':
+        return 'Tiket sudah habis.';
+      case 'PAYMENT_INIT_FAILED':
+        return 'Gagal membuat pembayaran. Coba lagi.';
+      default:
+        return 'Terjadi kesalahan. Coba lagi.';
     }
   });
 
@@ -312,10 +519,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   );
 
   ngOnInit() {
-    const eventId = this.route.snapshot.paramMap.get('event_id') ??
-                    this.route.snapshot.paramMap.get('order_id') ?? '';
+    const eventId =
+      this.route.snapshot.paramMap.get('event_id') ??
+      this.route.snapshot.paramMap.get('order_id') ??
+      '';
     this.checkoutStore.initCheckout(eventId);
-    if (!this.eventsStore.selectedEvent() || this.eventsStore.selectedEvent()?.event_id !== eventId) {
+    if (
+      !this.eventsStore.selectedEvent() ||
+      this.eventsStore.selectedEvent()?.event_id !== eventId
+    ) {
       this.eventsStore.loadEventDetail(eventId);
     }
   }
@@ -325,7 +537,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   getQty(ticketTypeId: string): number {
-    return this.checkoutStore.selectedTickets().find((t) => t.ticket_type_id === ticketTypeId)?.quantity ?? 0;
+    return (
+      this.checkoutStore.selectedTickets().find((t) => t.ticket_type_id === ticketTypeId)
+        ?.quantity ?? 0
+    );
   }
 
   incrementTicket(tt: any) {

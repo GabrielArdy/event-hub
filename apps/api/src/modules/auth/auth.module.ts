@@ -8,11 +8,7 @@ import { RefreshStrategy } from './strategies/refresh.strategy';
 import { QueueModule } from '../../common/queue/queue.module';
 
 @Module({
-  imports: [
-    PassportModule,
-    JwtModule.register({}),
-    QueueModule,
-  ],
+  imports: [PassportModule, JwtModule.register({}), QueueModule],
   providers: [AuthService, JwtStrategy, RefreshStrategy],
   controllers: [AuthController],
   exports: [AuthService],

@@ -10,17 +10,69 @@ import { AuthStore } from '../../store/auth.store';
   selector: 'app-forgot-password',
   standalone: true,
   imports: [ReactiveFormsModule, RouterLink, ButtonModule, InputTextModule, MessageModule],
-  styles: [`
-    .page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #F9FAFB; padding: 24px; }
-    .card { width: 100%; max-width: 420px; background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
-    .logo { text-align: center; font-size: 1.75rem; font-weight: 700; color: #6C63FF; margin-bottom: 8px; }
-    .subtitle { text-align: center; color: #6B7280; font-size: 0.875rem; margin-bottom: 24px; }
-    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
-    label { font-size: 0.875rem; font-weight: 500; color: #374151; }
-    .error-text { font-size: 0.75rem; color: #EF4444; }
-    .back-link { display: block; text-align: center; font-size: 0.875rem; color: #6C63FF; text-decoration: none; margin-top: 16px; }
-    .success-box { background: #DCFCE7; border: 1px solid #BBF7D0; border-radius: 12px; padding: 24px; text-align: center; }
-  `],
+  styles: [
+    `
+      .page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f9fafb;
+        padding: 24px;
+      }
+      .card {
+        width: 100%;
+        max-width: 420px;
+        background: #fff;
+        border-radius: 16px;
+        padding: 32px;
+        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+      }
+      .logo {
+        text-align: center;
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #6c63ff;
+        margin-bottom: 8px;
+      }
+      .subtitle {
+        text-align: center;
+        color: #6b7280;
+        font-size: 0.875rem;
+        margin-bottom: 24px;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 16px;
+      }
+      label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #374151;
+      }
+      .error-text {
+        font-size: 0.75rem;
+        color: #ef4444;
+      }
+      .back-link {
+        display: block;
+        text-align: center;
+        font-size: 0.875rem;
+        color: #6c63ff;
+        text-decoration: none;
+        margin-top: 16px;
+      }
+      .success-box {
+        background: #dcfce7;
+        border: 1px solid #bbf7d0;
+        border-radius: 12px;
+        padding: 24px;
+        text-align: center;
+      }
+    `,
+  ],
   template: `
     <div class="page">
       <div class="card">
@@ -29,7 +81,8 @@ import { AuthStore } from '../../store/auth.store';
             <div style="font-size: 2.5rem;">📧</div>
             <h3 style="margin: 12px 0 8px;">Email Terkirim!</h3>
             <p style="color: #6B7280; font-size: 0.875rem;">
-              Cek email <strong>{{ submittedEmail }}</strong> dan ikuti instruksi untuk reset password.
+              Cek email <strong>{{ submittedEmail }}</strong> dan ikuti instruksi untuk reset
+              password.
             </p>
             <a class="back-link" routerLink="/auth/login">Kembali ke Login</a>
           </div>
@@ -44,16 +97,27 @@ import { AuthStore } from '../../store/auth.store';
           <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="field">
               <label for="email">Email</label>
-              <input pInputText id="email" type="email" formControlName="email"
-                placeholder="email@contoh.com" style="width: 100%" />
+              <input
+                pInputText
+                id="email"
+                type="email"
+                formControlName="email"
+                placeholder="email@contoh.com"
+                style="width: 100%"
+              />
               @if (form.get('email')?.invalid && form.get('email')?.touched) {
                 <span class="error-text">Email tidak valid</span>
               }
             </div>
 
-            <button pButton type="submit" label="Kirim Link Reset"
-              [loading]="authStore.isLoading()" [disabled]="form.invalid || authStore.isLoading()"
-              style="width: 100%; background: #6C63FF; border-color: #6C63FF; border-radius: 9999px;"></button>
+            <button
+              pButton
+              type="submit"
+              label="Kirim Link Reset"
+              [loading]="authStore.isLoading()"
+              [disabled]="form.invalid || authStore.isLoading()"
+              style="width: 100%; background: #6C63FF; border-color: #6C63FF; border-radius: 9999px;"
+            ></button>
           </form>
 
           <a class="back-link" routerLink="/auth/login">← Kembali ke Login</a>
@@ -75,7 +139,9 @@ export class ForgotPasswordComponent implements OnInit {
 
   readonly form = this.fb.group({ email: ['', [Validators.required, Validators.email]] });
 
-  ngOnInit() { this.authStore.clearError(); }
+  ngOnInit() {
+    this.authStore.clearError();
+  }
 
   onSubmit() {
     if (this.form.invalid) return;

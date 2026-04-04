@@ -37,8 +37,9 @@ export const EventsStore = signalStore(
 
   withComputed(({ events, filters }) => ({
     hasEvents: computed(() => events().length > 0),
-    activeFiltersCount: computed(() =>
-      Object.values(filters()).filter((v) => v !== undefined && v !== '' && v !== null).length,
+    activeFiltersCount: computed(
+      () =>
+        Object.values(filters()).filter((v) => v !== undefined && v !== '' && v !== null).length,
     ),
   })),
 
@@ -79,14 +80,24 @@ export const EventsStore = signalStore(
 
       loadEventDetail: rxMethod<string>(
         pipe(
-          tap(() => patchState(store, { isDetailLoading: true, selectedEvent: null, seatMap: null, error: null })),
+          tap(() =>
+            patchState(store, {
+              isDetailLoading: true,
+              selectedEvent: null,
+              seatMap: null,
+              error: null,
+            }),
+          ),
           switchMap((eventId) =>
             eventsApi.getEventDetail(eventId).pipe(
               tap((event) => {
                 patchState(store, { selectedEvent: event, isDetailLoading: false });
               }),
               catchError((err) => {
-                patchState(store, { isDetailLoading: false, error: err.error?.error?.code || 'LOAD_FAILED' });
+                patchState(store, {
+                  isDetailLoading: false,
+                  error: err.error?.error?.code || 'LOAD_FAILED',
+                });
                 return of(null);
               }),
             ),

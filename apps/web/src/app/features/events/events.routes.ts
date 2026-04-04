@@ -5,9 +5,7 @@ export const eventsRoutes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./pages/event-listing/event-listing.component').then(
-        (m) => m.EventListingComponent,
-      ),
+      import('./pages/event-listing/event-listing.component').then((m) => m.EventListingComponent),
   },
   {
     path: 'events/:event_id',

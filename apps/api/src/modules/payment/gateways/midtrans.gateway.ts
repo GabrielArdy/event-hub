@@ -95,9 +95,7 @@ export class MidtransGateway implements PaymentGateway {
   verifyWebhookSignature(payload: any, signature: string): boolean {
     const expected = crypto
       .createHash('sha512')
-      .update(
-        `${payload.order_id}${payload.status_code}${payload.gross_amount}${this.serverKey}`,
-      )
+      .update(`${payload.order_id}${payload.status_code}${payload.gross_amount}${this.serverKey}`)
       .digest('hex');
     return crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
   }
@@ -122,7 +120,11 @@ export class MidtransGateway implements PaymentGateway {
     };
   }
 
-  async processRefund(gatewayRef: string, amountIdr: number, orderId: string): Promise<RefundResult> {
+  async processRefund(
+    gatewayRef: string,
+    amountIdr: number,
+    orderId: string,
+  ): Promise<RefundResult> {
     const auth = Buffer.from(`${this.serverKey}:`).toString('base64');
     const response = await fetch(`${this.baseUrl}/v2/${gatewayRef}/refund`, {
       method: 'POST',

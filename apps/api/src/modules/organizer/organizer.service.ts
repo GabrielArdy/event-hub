@@ -66,7 +66,13 @@ export class OrganizerService {
   // ── List Events ───────────────────────────────────────────────────────────
   async listEvents(
     orgId: string,
-    query: { status?: EventStatus; page?: number; per_page?: number; sort?: string; order?: string },
+    query: {
+      status?: EventStatus;
+      page?: number;
+      per_page?: number;
+      sort?: string;
+      order?: string;
+    },
   ) {
     const page = query.page || 1;
     const perPage = Math.min(query.per_page || 20, 100);
@@ -201,7 +207,10 @@ export class OrganizerService {
       },
     });
 
-    return { data: { event_id: updated.id, updated_at: updated.updatedAt.toISOString() }, warnings };
+    return {
+      data: { event_id: updated.id, updated_at: updated.updatedAt.toISOString() },
+      warnings,
+    };
   }
 
   // ── Delete Event ──────────────────────────────────────────────────────────
@@ -298,7 +307,11 @@ export class OrganizerService {
     await this.queue.add('send-event-postponed-notification', { eventId });
     this.gateway.pushEventStatusChanged(eventId, event.status, EventStatus.POSTPONED);
 
-    return { event_id: updated.id, status: updated.status, new_start_at: updated.startAt.toISOString() };
+    return {
+      event_id: updated.id,
+      status: updated.status,
+      new_start_at: updated.startAt.toISOString(),
+    };
   }
 
   // ── Set Layout ────────────────────────────────────────────────────────────
@@ -318,10 +331,7 @@ export class OrganizerService {
 
     const totalSeats =
       dto.type === LayoutType.SEAT_MAP
-        ? (dto.data.rows || []).reduce(
-            (sum: number, row: any) => sum + (row.seats?.length || 0),
-            0,
-          )
+        ? (dto.data.rows || []).reduce((sum: number, row: any) => sum + (row.seats?.length || 0), 0)
         : (dto.data.zones || []).reduce((sum: number, z: any) => sum + (z.capacity || 0), 0);
 
     return {
@@ -470,11 +480,7 @@ export class OrganizerService {
   }
 
   // ── Get Attendees ─────────────────────────────────────────────────────────
-  async getAttendees(
-    orgId: string,
-    eventId: string,
-    query: { page?: number; per_page?: number },
-  ) {
+  async getAttendees(orgId: string, eventId: string, query: { page?: number; per_page?: number }) {
     await this.findEventOwned(orgId, eventId);
 
     const page = query.page || 1;

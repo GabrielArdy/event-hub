@@ -42,11 +42,7 @@ export class QueueService {
       'process-payout',
       'send-refund-notification',
     ];
-    const ticketJobs: JobName[] = [
-      'release-seat-lock',
-      'send-ticket-email',
-      'generate-ticket-pdf',
-    ];
+    const ticketJobs: JobName[] = ['release-seat-lock', 'send-ticket-email', 'generate-ticket-pdf'];
 
     if (paymentJobs.includes(jobName)) return this.payQueue;
     if (ticketJobs.includes(jobName)) return this.tktQueue;

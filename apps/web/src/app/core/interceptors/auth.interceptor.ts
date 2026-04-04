@@ -8,15 +8,16 @@ import { AuthApiService } from '../../features/auth/services/auth-api.service';
 let isRefreshing = false;
 const refreshSubject = new BehaviorSubject<string | null>(null);
 
-export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
+export const authInterceptor: HttpInterceptorFn = (
+  req: HttpRequest<unknown>,
+  next: HttpHandlerFn,
+) => {
   const authStore = inject(AuthStore);
   const authApi = inject(AuthApiService);
   const router = inject(Router);
   const token = authStore.accessToken();
 
-  const authReq = token
-    ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
-    : req;
+  const authReq = token ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } }) : req;
 
   return next(authReq).pipe(
     catchError((err) => {

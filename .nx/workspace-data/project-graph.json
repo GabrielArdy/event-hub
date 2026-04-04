@@ -8,14 +8,10 @@
         "sourceRoot": "libs/shared-types",
         "name": "@eventhub/shared-types",
         "projectType": "library",
-        "tags": [
-          "npm:public"
-        ],
+        "tags": ["npm:public"],
         "metadata": {
           "targetGroups": {
-            "NPM Scripts": [
-              "build"
-            ]
+            "NPM Scripts": ["build"]
           }
         },
         "targets": {
@@ -31,15 +27,11 @@
             "configurations": {},
             "parallelism": true,
             "cache": true,
-            "dependsOn": [
-              "^build"
-            ]
+            "dependsOn": ["^build"]
           },
           "nx-release-publish": {
             "executor": "@nx/js:release-publish",
-            "dependsOn": [
-              "^nx-release-publish"
-            ],
+            "dependsOn": ["^nx-release-publish"],
             "options": {},
             "configurations": {},
             "parallelism": true
@@ -56,14 +48,10 @@
         "sourceRoot": "libs/shared-utils",
         "name": "@eventhub/shared-utils",
         "projectType": "library",
-        "tags": [
-          "npm:public"
-        ],
+        "tags": ["npm:public"],
         "metadata": {
           "targetGroups": {
-            "NPM Scripts": [
-              "build"
-            ]
+            "NPM Scripts": ["build"]
           }
         },
         "targets": {
@@ -79,15 +67,11 @@
             "configurations": {},
             "parallelism": true,
             "cache": true,
-            "dependsOn": [
-              "^build"
-            ]
+            "dependsOn": ["^build"]
           },
           "nx-release-publish": {
             "executor": "@nx/js:release-publish",
-            "dependsOn": [
-              "^nx-release-publish"
-            ],
+            "dependsOn": ["^nx-release-publish"],
             "options": {},
             "configurations": {},
             "parallelism": true
@@ -104,19 +88,10 @@
         "sourceRoot": "apps/api",
         "name": "@eventhub/api",
         "projectType": "application",
-        "tags": [
-          "npm:public"
-        ],
+        "tags": ["npm:public"],
         "metadata": {
           "targetGroups": {
-            "NPM Scripts": [
-              "dev",
-              "build",
-              "start",
-              "test",
-              "test:watch",
-              "lint"
-            ]
+            "NPM Scripts": ["dev", "build", "start", "test", "test:watch", "lint"]
           }
         },
         "targets": {
@@ -144,9 +119,7 @@
             "configurations": {},
             "parallelism": true,
             "cache": true,
-            "dependsOn": [
-              "^build"
-            ]
+            "dependsOn": ["^build"]
           },
           "start": {
             "executor": "nx:run-script",
@@ -200,9 +173,7 @@
           },
           "nx-release-publish": {
             "executor": "@nx/js:release-publish",
-            "dependsOn": [
-              "^nx-release-publish"
-            ],
+            "dependsOn": ["^nx-release-publish"],
             "options": {},
             "configurations": {},
             "parallelism": true
@@ -219,17 +190,10 @@
         "sourceRoot": "apps/web",
         "name": "@eventhub/web",
         "projectType": "application",
-        "tags": [
-          "npm:public"
-        ],
+        "tags": ["npm:public"],
         "metadata": {
           "targetGroups": {
-            "NPM Scripts": [
-              "dev",
-              "build",
-              "test",
-              "lint"
-            ]
+            "NPM Scripts": ["dev", "build", "test", "lint"]
           }
         },
         "targets": {
@@ -257,9 +221,7 @@
             "configurations": {},
             "parallelism": true,
             "cache": true,
-            "dependsOn": [
-              "^build"
-            ]
+            "dependsOn": ["^build"]
           },
           "test": {
             "executor": "nx:run-script",
@@ -289,9 +251,7 @@
           },
           "nx-release-publish": {
             "executor": "@nx/js:release-publish",
-            "dependsOn": [
-              "^nx-release-publish"
-            ],
+            "dependsOn": ["^nx-release-publish"],
             "options": {},
             "configurations": {},
             "parallelism": true

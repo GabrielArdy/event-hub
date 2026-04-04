@@ -16,10 +16,7 @@ import { OrderStatusGateway } from './gateways/order-status.gateway';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { ValidateTicketDto } from './dto/validate-ticket.dto';
 import { generateQrToken, verifyQrToken } from '../../common/utils/qr-token.util';
-import {
-  calculatePlatformFee,
-  calculateGatewayFee,
-} from '../../common/utils/fee-calculator.util';
+import { calculatePlatformFee, calculateGatewayFee } from '../../common/utils/fee-calculator.util';
 import { PaymentMethod } from '@prisma/client';
 
 const SEAT_LOCK_TTL = 600; // BR-TKT-001: 10 minutes
@@ -212,7 +209,9 @@ export class TicketingService {
 
       // Seat map validation
       if (event.venueType === 'PHYSICAL') {
-        const layout = await this.prisma.eventLayout.findUnique({ where: { eventId: dto.event_id } });
+        const layout = await this.prisma.eventLayout.findUnique({
+          where: { eventId: dto.event_id },
+        });
         if (layout?.type === LayoutType.SEAT_MAP) {
           if (!item.seats || item.seats.length !== item.quantity) {
             throw new UnprocessableEntityException('SEATS_REQUIRED');
@@ -275,7 +274,10 @@ export class TicketingService {
 
     // WS push SEAT_LOCKED
     if (seatsToLock.length) {
-      this.seatsGateway.pushSeatLocked(dto.event_id, { seats: seatsToLock, lockedUntil: expiresAt });
+      this.seatsGateway.pushSeatLocked(dto.event_id, {
+        seats: seatsToLock,
+        lockedUntil: expiresAt,
+      });
     }
 
     return {

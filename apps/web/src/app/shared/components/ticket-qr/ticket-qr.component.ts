@@ -6,51 +6,53 @@ import { TicketInfo } from '@eventhub/shared-types';
   selector: 'app-ticket-qr',
   standalone: true,
   imports: [ButtonModule],
-  styles: [`
-    .qr-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-    }
-    .qr-container {
-      position: relative;
-      display: inline-block;
-    }
-    canvas {
-      border-radius: 12px;
-      display: block;
-    }
-    .watermark {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(108, 99, 255, 0.75);
-      color: #fff;
-      font-size: 0.625rem;
-      font-weight: 600;
-      text-align: center;
-      padding: 4px;
-      border-bottom-left-radius: 12px;
-      border-bottom-right-radius: 12px;
-      pointer-events: none;
-    }
-    .ticket-info {
-      text-align: center;
-    }
-    .ticket-info h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #111827;
-      margin: 0 0 4px;
-    }
-    .ticket-info p {
-      font-size: 0.875rem;
-      color: #6B7280;
-      margin: 0;
-    }
-  `],
+  styles: [
+    `
+      .qr-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+      .qr-container {
+        position: relative;
+        display: inline-block;
+      }
+      canvas {
+        border-radius: 12px;
+        display: block;
+      }
+      .watermark {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(108, 99, 255, 0.75);
+        color: #fff;
+        font-size: 0.625rem;
+        font-weight: 600;
+        text-align: center;
+        padding: 4px;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        pointer-events: none;
+      }
+      .ticket-info {
+        text-align: center;
+      }
+      .ticket-info h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #111827;
+        margin: 0 0 4px;
+      }
+      .ticket-info p {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin: 0;
+      }
+    `,
+  ],
   template: `
     <div class="qr-wrap">
       <div class="qr-container">
@@ -70,7 +72,14 @@ import { TicketInfo } from '@eventhub/shared-types';
 
       @if (ticket?.pdf_url) {
         <a [href]="ticket?.pdf_url" target="_blank" download>
-          <button pButton type="button" label="Download PDF" icon="pi pi-download" severity="secondary" outlined></button>
+          <button
+            pButton
+            type="button"
+            label="Download PDF"
+            icon="pi pi-download"
+            severity="secondary"
+            outlined
+          ></button>
         </a>
       }
     </div>

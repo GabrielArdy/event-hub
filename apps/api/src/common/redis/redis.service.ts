@@ -104,13 +104,7 @@ export class RedisService implements OnModuleDestroy {
 
   // ── Payout Lock ────────────────────────────────────────────────────────────
   async acquirePayoutLock(eventId: string): Promise<boolean> {
-    const result = await this.client.set(
-      `payout:lock:${eventId}`,
-      '1',
-      'EX',
-      3600,
-      'NX',
-    );
+    const result = await this.client.set(`payout:lock:${eventId}`, '1', 'EX', 3600, 'NX');
     return result === 'OK';
   }
 

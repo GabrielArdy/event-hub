@@ -12,26 +12,92 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
   selector: 'app-event-report',
   standalone: true,
   imports: [RouterLink, ButtonModule, SkeletonModule, TableModule, DividerModule, IdrCurrencyPipe],
-  styles: [`
-    .page { max-width: 1000px; margin: 0 auto; padding: 32px 24px; }
-    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
-    .page-title { font-size: 1.5rem; font-weight: 700; color: #111827; }
-    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
-    @media (max-width: 768px) { .stats-grid { grid-template-columns: 1fr; } }
-    .stat-card { background: #fff; border-radius: 16px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .stat-label { font-size: 0.875rem; color: #6B7280; margin-bottom: 8px; }
-    .stat-value { font-size: 1.5rem; font-weight: 700; color: #111827; }
-    .section-title { font-size: 1.125rem; font-weight: 700; color: #111827; margin: 0 0 16px; }
-    .payout-box { background: linear-gradient(135deg, #6C63FF 0%, #5A52D5 100%); color: #fff; border-radius: 16px; padding: 24px; margin-bottom: 32px; }
-    .payout-label { font-size: 0.875rem; opacity: 0.85; margin-bottom: 4px; }
-    .payout-value { font-size: 2rem; font-weight: 700; }
-    .payout-note { font-size: 0.8rem; opacity: 0.75; margin-top: 8px; }
-  `],
+  styles: [
+    `
+      .page {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 32px 24px;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+      }
+      .page-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #111827;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+      @media (max-width: 768px) {
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .stat-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+      .stat-label {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-bottom: 8px;
+      }
+      .stat-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #111827;
+      }
+      .section-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #111827;
+        margin: 0 0 16px;
+      }
+      .payout-box {
+        background: linear-gradient(135deg, #6c63ff 0%, #5a52d5 100%);
+        color: #fff;
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 32px;
+      }
+      .payout-label {
+        font-size: 0.875rem;
+        opacity: 0.85;
+        margin-bottom: 4px;
+      }
+      .payout-value {
+        font-size: 2rem;
+        font-weight: 700;
+      }
+      .payout-note {
+        font-size: 0.8rem;
+        opacity: 0.75;
+        margin-top: 8px;
+      }
+    `,
+  ],
   template: `
     <div class="page">
       <div class="header">
         <h1 class="page-title">Laporan Event</h1>
-        <button pButton type="button" label="Export CSV" icon="pi pi-download" outlined style="border-radius: 9999px;"></button>
+        <button
+          pButton
+          type="button"
+          label="Export CSV"
+          icon="pi pi-download"
+          outlined
+          style="border-radius: 9999px;"
+        ></button>
       </div>
 
       @if (isLoading()) {
@@ -43,9 +109,9 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
           <div class="payout-label">Estimasi Pencairan Dana (D+7 setelah acara)</div>
           <div class="payout-value">{{ report()!.revenue_net_idr | idrCurrency }}</div>
           <div class="payout-note">
-            Gross: {{ report()!.revenue_gross_idr | idrCurrency }} |
-            Platform fee: {{ report()!.platform_fee_idr | idrCurrency }} |
-            Gateway fee: {{ report()!.gateway_fee_idr | idrCurrency }}
+            Gross: {{ report()!.revenue_gross_idr | idrCurrency }} | Platform fee:
+            {{ report()!.platform_fee_idr | idrCurrency }} | Gateway fee:
+            {{ report()!.gateway_fee_idr | idrCurrency }}
           </div>
         </div>
 
@@ -53,7 +119,9 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-label">Total Revenue</div>
-            <div class="stat-value" style="color: #22C55E;">{{ report()!.revenue_gross_idr | idrCurrency }}</div>
+            <div class="stat-value" style="color: #22C55E;">
+              {{ report()!.revenue_gross_idr | idrCurrency }}
+            </div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Tiket Terjual</div>
@@ -128,7 +196,10 @@ export class EventReportComponent implements OnInit {
     this.orgStore.loadEventDetail(eventId);
     this.isLoading.set(true);
     this.orgApi.getReport(eventId).subscribe({
-      next: (r) => { this.report.set(r); this.isLoading.set(false); },
+      next: (r) => {
+        this.report.set(r);
+        this.isLoading.set(false);
+      },
       error: () => this.isLoading.set(false),
     });
   }

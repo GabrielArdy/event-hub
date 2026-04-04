@@ -36,7 +36,9 @@ export class CountdownTimerComponent implements OnInit, OnDestroy {
   readonly label = computed(() => {
     const secs = this.remaining();
     if (secs <= 0) return '00:00';
-    const m = Math.floor(secs / 60).toString().padStart(2, '0');
+    const m = Math.floor(secs / 60)
+      .toString()
+      .padStart(2, '0');
     const s = (secs % 60).toString().padStart(2, '0');
     return `${m}:${s}`;
   });

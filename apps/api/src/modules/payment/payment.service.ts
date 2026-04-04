@@ -92,7 +92,12 @@ export class PaymentService {
         buyerEmail: order.user.email,
       });
 
-      paymentData = { ...paymentData, gatewayRef: va.gatewayRef, vaNumber: va.vaNumber, bankCode: dto.bank_code };
+      paymentData = {
+        ...paymentData,
+        gatewayRef: va.gatewayRef,
+        vaNumber: va.vaNumber,
+        bankCode: dto.bank_code,
+      };
       responseData.virtual_account = {
         bank_code: dto.bank_code,
         va_number: va.vaNumber,
@@ -109,7 +114,11 @@ export class PaymentService {
         buyerEmail: order.user.email,
       });
 
-      paymentData = { ...paymentData, gatewayRef: ewallet.gatewayRef, redirectUrl: ewallet.redirectUrl };
+      paymentData = {
+        ...paymentData,
+        gatewayRef: ewallet.gatewayRef,
+        redirectUrl: ewallet.redirectUrl,
+      };
       responseData.redirect_url = ewallet.redirectUrl;
       responseData.deeplink_url = ewallet.deeplinkUrl;
       responseData.qr_url = ewallet.qrUrl;
@@ -154,7 +163,10 @@ export class PaymentService {
   // ── Webhook Handler (BR-PAY-006) ──────────────────────────────────────────
   async handleWebhook(gateway: string, payload: any, signature: string) {
     // Verify HMAC signature
-    const valid = this.midtrans.verifyWebhookSignature(payload, signature || payload.signature_key || '');
+    const valid = this.midtrans.verifyWebhookSignature(
+      payload,
+      signature || payload.signature_key || '',
+    );
     // In sandbox/dev, we might skip strict verification
     if (!valid && process.env.NODE_ENV === 'production') {
       return { status: 'REJECTED' };
@@ -329,9 +341,10 @@ export class PaymentService {
     if (usedTickets.length) throw new UnprocessableEntityException('TICKETS_ALREADY_USED');
 
     // Calculate refund amount
-    const refundPercent = refundPolicy === RefundPolicy.PARTIAL_REFUND
-      ? (event.paymentConfig?.refundPercent ?? 100)
-      : 100;
+    const refundPercent =
+      refundPolicy === RefundPolicy.PARTIAL_REFUND
+        ? (event.paymentConfig?.refundPercent ?? 100)
+        : 100;
 
     const totalIdr = tickets.reduce(
       (sum, t) => sum + Math.ceil(t.ticketType.priceIdr * (refundPercent / 100)),

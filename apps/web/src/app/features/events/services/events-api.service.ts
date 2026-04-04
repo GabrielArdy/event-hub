@@ -29,17 +29,17 @@ export class EventsApiService {
 
   getEvents(filters: EventFilters = {}): Observable<PaginatedEvents> {
     const params = new HttpParams({ fromObject: filters as Record<string, string> });
-    return this.http
-      .get<ApiResponse<EventSummary[]>>(`${this.BASE}/events`, { params })
-      .pipe(
-        map((res) => ({
-          events: (res.data as any[]) ?? [],
-          meta: res.meta ?? { page: 1, per_page: 12, total: 0, total_pages: 1 },
-        })),
-      );
+    return this.http.get<ApiResponse<EventSummary[]>>(`${this.BASE}/events`, { params }).pipe(
+      map((res) => ({
+        events: (res.data as any[]) ?? [],
+        meta: res.meta ?? { page: 1, per_page: 12, total: 0, total_pages: 1 },
+      })),
+    );
   }
 
-  getEventDetail(eventId: string): Observable<EventDetail & { is_wishlisted: boolean; sold_percentage: number }> {
+  getEventDetail(
+    eventId: string,
+  ): Observable<EventDetail & { is_wishlisted: boolean; sold_percentage: number }> {
     return this.http
       .get<ApiResponse<EventDetail>>(`${this.BASE}/events/${eventId}`)
       .pipe(map((res) => res.data as any));

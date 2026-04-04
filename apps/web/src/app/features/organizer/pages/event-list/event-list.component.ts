@@ -22,23 +22,68 @@ const STATUS_OPTIONS = [
 @Component({
   selector: 'app-org-event-list',
   standalone: true,
-  imports: [RouterLink, ButtonModule, TableModule, DropdownModule, SkeletonModule, FormsModule, DatePipe, StatusBadgeComponent, IdrCurrencyPipe],
-  styles: [`
-    .page { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
-    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-    .page-title { font-size: 1.5rem; font-weight: 700; color: #111827; }
-    .filters { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; }
-    .event-banner { width: 48px; height: 48px; object-fit: cover; border-radius: 6px; }
-    .event-title-cell { font-weight: 600; color: #111827; }
-    .event-date { font-size: 0.8rem; color: #6B7280; }
-  `],
+  imports: [
+    RouterLink,
+    ButtonModule,
+    TableModule,
+    DropdownModule,
+    SkeletonModule,
+    FormsModule,
+    DatePipe,
+    StatusBadgeComponent,
+    IdrCurrencyPipe,
+  ],
+  styles: [
+    `
+      .page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 32px 24px;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+      .page-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #111827;
+      }
+      .filters {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .event-banner {
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+        border-radius: 6px;
+      }
+      .event-title-cell {
+        font-weight: 600;
+        color: #111827;
+      }
+      .event-date {
+        font-size: 0.8rem;
+        color: #6b7280;
+      }
+    `,
+  ],
   template: `
     <div class="page">
       <div class="header">
         <h1 class="page-title">Kelola Event</h1>
         <a routerLink="/organizer/events/new">
-          <button pButton type="button" label="+ Buat Event Baru"
-            style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"></button>
+          <button
+            pButton
+            type="button"
+            label="+ Buat Event Baru"
+            style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"
+          ></button>
         </a>
       </div>
 
@@ -54,7 +99,7 @@ const STATUS_OPTIONS = [
       </div>
 
       @if (orgStore.isLoading()) {
-        @for (i of [1,2,3,4,5]; track i) {
+        @for (i of [1, 2, 3, 4, 5]; track i) {
           <p-skeleton height="60px" styleClass="mb-2" />
         }
       } @else {
@@ -80,7 +125,9 @@ const STATUS_OPTIONS = [
                   @if (event.banner_url) {
                     <img [src]="event.banner_url" class="event-banner" />
                   } @else {
-                    <div style="width: 48px; height: 48px; border-radius: 6px; background: #F3F4F6; display: flex; align-items: center; justify-content: center;">
+                    <div
+                      style="width: 48px; height: 48px; border-radius: 6px; background: #F3F4F6; display: flex; align-items: center; justify-content: center;"
+                    >
                       <i class="pi pi-image" style="color: #9CA3AF;"></i>
                     </div>
                   }
@@ -91,27 +138,50 @@ const STATUS_OPTIONS = [
                 </div>
               </td>
               <td>
-                <div class="event-date">{{ event.start_at | date:'d MMM yyyy' }}</div>
-                <div class="event-date">{{ event.start_at | date:'HH:mm' }} WIB</div>
+                <div class="event-date">{{ event.start_at | date: 'd MMM yyyy' }}</div>
+                <div class="event-date">{{ event.start_at | date: 'HH:mm' }} WIB</div>
               </td>
               <td>
                 <app-status-badge [status]="event.status" />
               </td>
               <td>
-                <span style="font-weight: 600;">{{ event.ticket_available ? 'Ada' : 'Habis' }}</span>
+                <span style="font-weight: 600;">{{
+                  event.ticket_available ? 'Ada' : 'Habis'
+                }}</span>
               </td>
               <td>
                 <div style="display: flex; gap: 6px;">
                   <a [routerLink]="['/organizer/events', event.event_id, 'edit']">
-                    <button pButton type="button" icon="pi pi-pencil" size="small" outlined title="Edit"></button>
+                    <button
+                      pButton
+                      type="button"
+                      icon="pi pi-pencil"
+                      size="small"
+                      outlined
+                      title="Edit"
+                    ></button>
                   </a>
                   @if (event.status === 'ONGOING' || event.status === 'PUBLISHED') {
                     <a [routerLink]="['/organizer/events', event.event_id, 'dashboard']">
-                      <button pButton type="button" icon="pi pi-chart-line" size="small" outlined title="Live Dashboard"></button>
+                      <button
+                        pButton
+                        type="button"
+                        icon="pi pi-chart-line"
+                        size="small"
+                        outlined
+                        title="Live Dashboard"
+                      ></button>
                     </a>
                   }
                   <a [routerLink]="['/organizer/events', event.event_id, 'report']">
-                    <button pButton type="button" icon="pi pi-file-pdf" size="small" outlined title="Laporan"></button>
+                    <button
+                      pButton
+                      type="button"
+                      icon="pi pi-file-pdf"
+                      size="small"
+                      outlined
+                      title="Laporan"
+                    ></button>
                   </a>
                 </div>
               </td>
@@ -127,7 +197,9 @@ export class OrgEventListComponent implements OnInit {
   readonly statusOptions = STATUS_OPTIONS;
   selectedStatus = '';
 
-  ngOnInit() { this.orgStore.loadEvents(undefined); }
+  ngOnInit() {
+    this.orgStore.loadEvents(undefined);
+  }
 
   onStatusChange(status: string) {
     this.orgStore.loadEvents(status || undefined);

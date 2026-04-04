@@ -9,11 +9,7 @@ import { OrganizerModule } from '../organizer/organizer.module';
 import { QueueModule } from '../../common/queue/queue.module';
 
 @Module({
-  imports: [
-    JwtModule.register({}),
-    OrganizerModule,
-    QueueModule,
-  ],
+  imports: [JwtModule.register({}), OrganizerModule, QueueModule],
   providers: [TicketingService, SeatsGateway, OrderStatusGateway, SeatLockProcessor],
   controllers: [TicketingController],
   exports: [TicketingService, SeatsGateway, OrderStatusGateway],

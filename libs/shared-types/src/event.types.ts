@@ -1,4 +1,10 @@
-export type EventStatus = 'DRAFT' | 'PUBLISHED' | 'ONGOING' | 'COMPLETED' | 'CANCELLED' | 'POSTPONED';
+export type EventStatus =
+  | 'DRAFT'
+  | 'PUBLISHED'
+  | 'ONGOING'
+  | 'COMPLETED'
+  | 'CANCELLED'
+  | 'POSTPONED';
 export type EventCategory = 'MUSIC' | 'SEMINAR' | 'SPORT' | 'EXHIBITION' | 'COMEDY' | 'OTHER';
 export type VenueType = 'PHYSICAL' | 'ONLINE';
 export type LayoutType = 'SEAT_MAP' | 'ZONE';

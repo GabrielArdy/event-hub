@@ -70,8 +70,6 @@ export class AuthApiService {
   }
 
   getMe(): Observable<UserProfile> {
-    return this.http
-      .get<ApiResponse<UserProfile>>(`${this.BASE}/me`)
-      .pipe(map((res) => res.data));
+    return this.http.get<ApiResponse<UserProfile>>(`${this.BASE}/me`).pipe(map((res) => res.data));
   }
 }

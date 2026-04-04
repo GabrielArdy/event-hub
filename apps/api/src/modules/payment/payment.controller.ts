@@ -42,10 +42,7 @@ export class PaymentController {
   @Get(':payment_id')
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Status detail pembayaran' })
-  async getPayment(
-    @CurrentUser() user: RequestUser,
-    @Param('payment_id') paymentId: string,
-  ) {
+  async getPayment(@CurrentUser() user: RequestUser, @Param('payment_id') paymentId: string) {
     const data = await this.paymentService.getPayment(user.id, paymentId);
     return { success: true, data };
   }

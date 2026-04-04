@@ -43,18 +43,24 @@ export class TicketingController {
     @Query('sort') sort?: string,
   ) {
     return this.ticketingService.getPublicEvents({
-      q, category, city, date_from, date_to,
-      price_min, price_max, status, page, per_page, sort,
+      q,
+      category,
+      city,
+      date_from,
+      date_to,
+      price_min,
+      price_max,
+      status,
+      page,
+      per_page,
+      sort,
     });
   }
 
   @Get('events/:event_id')
   @Public()
   @ApiOperation({ summary: 'Detail acara publik' })
-  async getPublicEvent(
-    @Param('event_id') eventId: string,
-    @CurrentUser() user?: RequestUser,
-  ) {
+  async getPublicEvent(@Param('event_id') eventId: string, @CurrentUser() user?: RequestUser) {
     const data = await this.ticketingService.getPublicEvent(eventId, user?.id);
     return { success: true, data };
   }
@@ -103,10 +109,7 @@ export class TicketingController {
   @Get('me/tickets/:ticket_id')
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Detail satu tiket' })
-  async getMyTicket(
-    @CurrentUser() user: RequestUser,
-    @Param('ticket_id') ticketId: string,
-  ) {
+  async getMyTicket(@CurrentUser() user: RequestUser, @Param('ticket_id') ticketId: string) {
     const data = await this.ticketingService.getMyTicket(user.id, ticketId);
     return { success: true, data };
   }
@@ -131,10 +134,7 @@ export class TicketingController {
   @Roles(Role.END_USER)
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Toggle wishlist acara' })
-  async toggleWishlist(
-    @CurrentUser() user: RequestUser,
-    @Param('event_id') eventId: string,
-  ) {
+  async toggleWishlist(@CurrentUser() user: RequestUser, @Param('event_id') eventId: string) {
     return this.ticketingService.toggleWishlist(user.id, eventId);
   }
 

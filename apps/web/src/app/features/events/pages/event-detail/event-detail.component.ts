@@ -21,27 +21,128 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
   selector: 'app-event-detail',
   standalone: true,
   imports: [
-    RouterLink, DatePipe, IdrCurrencyPipe,
-    ButtonModule, SkeletonModule, TabViewModule, DividerModule, TagModule, MessageModule,
-    NavbarComponent, SeatMapComponent, StatusBadgeComponent, PriceDisplayComponent,
+    RouterLink,
+    DatePipe,
+    IdrCurrencyPipe,
+    ButtonModule,
+    SkeletonModule,
+    TabViewModule,
+    DividerModule,
+    TagModule,
+    MessageModule,
+    NavbarComponent,
+    SeatMapComponent,
+    StatusBadgeComponent,
+    PriceDisplayComponent,
   ],
-  styles: [`
-    .breadcrumb { padding: 16px 24px; font-size: 0.875rem; color: #6B7280; max-width: 1200px; margin: 0 auto; }
-    .breadcrumb a { color: #6C63FF; text-decoration: none; }
-    .banner { width: 100%; aspect-ratio: 16/9; object-fit: cover; max-height: 480px; display: block; }
-    .banner-placeholder { width: 100%; height: 320px; background: #F3F4F6; display: flex; align-items: center; justify-content: center; }
-    .content { max-width: 1200px; margin: 0 auto; padding: 32px 24px; display: grid; grid-template-columns: 1fr 380px; gap: 40px; }
-    @media (max-width: 1024px) { .content { grid-template-columns: 1fr; } }
-    .event-title { font-size: 1.75rem; font-weight: 700; color: #111827; margin: 0 0 16px; }
-    .organizer-row { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
-    .org-avatar { width: 40px; height: 40px; border-radius: 50%; background: #6C63FF; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; flex-shrink: 0; }
-    .meta-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 0.875rem; color: #374151; }
-    .meta-icon { color: #6C63FF; flex-shrink: 0; margin-top: 2px; }
-    .sticky-card { position: sticky; top: 80px; background: #fff; border: 1px solid #E5E7EB; border-radius: 16px; padding: 24px; }
-    .ticket-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #F3F4F6; }
-    .ticket-row:last-child { border-bottom: none; }
-    .cancelled-banner { background: #FEE2E2; border: 1px solid #FECACA; border-radius: 12px; padding: 16px; text-align: center; margin-bottom: 16px; color: #DC2626; font-weight: 600; }
-  `],
+  styles: [
+    `
+      .breadcrumb {
+        padding: 16px 24px;
+        font-size: 0.875rem;
+        color: #6b7280;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .breadcrumb a {
+        color: #6c63ff;
+        text-decoration: none;
+      }
+      .banner {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        max-height: 480px;
+        display: block;
+      }
+      .banner-placeholder {
+        width: 100%;
+        height: 320px;
+        background: #f3f4f6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 32px 24px;
+        display: grid;
+        grid-template-columns: 1fr 380px;
+        gap: 40px;
+      }
+      @media (max-width: 1024px) {
+        .content {
+          grid-template-columns: 1fr;
+        }
+      }
+      .event-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #111827;
+        margin: 0 0 16px;
+      }
+      .organizer-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .org-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #6c63ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .meta-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 12px;
+        font-size: 0.875rem;
+        color: #374151;
+      }
+      .meta-icon {
+        color: #6c63ff;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .sticky-card {
+        position: sticky;
+        top: 80px;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        padding: 24px;
+      }
+      .ticket-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #f3f4f6;
+      }
+      .ticket-row:last-child {
+        border-bottom: none;
+      }
+      .cancelled-banner {
+        background: #fee2e2;
+        border: 1px solid #fecaca;
+        border-radius: 12px;
+        padding: 16px;
+        text-align: center;
+        margin-bottom: 16px;
+        color: #dc2626;
+        font-weight: 600;
+      }
+    `,
+  ],
   template: `
     <app-navbar />
 
@@ -64,7 +165,10 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
 
       <div class="breadcrumb">
         <a routerLink="/">Beranda</a> &rsaquo;
-        <a [routerLink]="['/']" [queryParams]="{category: event.category}">{{ categoryLabel(event.category) }}</a> &rsaquo;
+        <a [routerLink]="['/']" [queryParams]="{ category: event.category }">{{
+          categoryLabel(event.category)
+        }}</a>
+        &rsaquo;
         {{ event.title }}
       </div>
 
@@ -88,12 +192,18 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
 
           <div class="organizer-row">
             @if (event.organizer?.avatar_url) {
-              <img [src]="event.organizer.avatar_url" class="org-avatar" style="object-fit: cover;" />
+              <img
+                [src]="event.organizer.avatar_url"
+                class="org-avatar"
+                style="object-fit: cover;"
+              />
             } @else {
               <div class="org-avatar">{{ event.organizer?.org_name?.charAt(0) }}</div>
             }
             <div>
-              <div style="font-weight: 600; font-size: 0.875rem;">{{ event.organizer?.org_name }}</div>
+              <div style="font-weight: 600; font-size: 0.875rem;">
+                {{ event.organizer?.org_name }}
+              </div>
               <div style="font-size: 0.75rem; color: #6B7280;">Penyelenggara</div>
             </div>
           </div>
@@ -101,8 +211,10 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
           <div class="meta-row">
             <i class="pi pi-calendar meta-icon"></i>
             <div>
-              <div>{{ event.start_at | date:'EEEE, d MMMM yyyy' }}</div>
-              <div style="color: #6B7280;">{{ event.start_at | date:'HH:mm' }} – {{ event.end_at | date:'HH:mm' }} WIB</div>
+              <div>{{ event.start_at | date: 'EEEE, d MMMM yyyy' }}</div>
+              <div style="color: #6B7280;">
+                {{ event.start_at | date: 'HH:mm' }} – {{ event.end_at | date: 'HH:mm' }} WIB
+              </div>
             </div>
           </div>
 
@@ -122,7 +234,9 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
 
           <p-tabView>
             <p-tabPanel header="Deskripsi">
-              <div style="line-height: 1.7; color: #374151; white-space: pre-wrap;">{{ event.description }}</div>
+              <div style="line-height: 1.7; color: #374151; white-space: pre-wrap;">
+                {{ event.description }}
+              </div>
             </p-tabPanel>
             <p-tabPanel header="Tipe Tiket">
               @for (tt of event.ticket_types; track tt.ticket_type_id) {
@@ -155,8 +269,10 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
           <div class="sticky-card">
             @if (event.status === 'CANCELLED') {
               <div class="cancelled-banner">
-                <i class="pi pi-times-circle"></i> Event Dibatalkan<br>
-                <span style="font-size: 0.875rem; font-weight: 400; color: #991B1B;">Refund otomatis akan diproses.</span>
+                <i class="pi pi-times-circle"></i> Event Dibatalkan<br />
+                <span style="font-size: 0.875rem; font-weight: 400; color: #991B1B;"
+                  >Refund otomatis akan diproses.</span
+                >
               </div>
             }
 
@@ -165,18 +281,28 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
             }
 
             <div style="margin-bottom: 20px;">
-              <div style="font-size: 0.875rem; color: #6B7280; margin-bottom: 4px;">Harga mulai dari</div>
+              <div style="font-size: 0.875rem; color: #6B7280; margin-bottom: 4px;">
+                Harga mulai dari
+              </div>
               <app-price-display [amount]="event.price_min_idr" size="1.5rem" />
             </div>
 
-            <button pButton type="button"
+            <button
+              pButton
+              type="button"
               [label]="buyBtnLabel(event)"
-              [disabled]="!event.ticket_available || event.status === 'CANCELLED' || event.status === 'COMPLETED'"
+              [disabled]="
+                !event.ticket_available ||
+                event.status === 'CANCELLED' ||
+                event.status === 'COMPLETED'
+              "
               (click)="onBuyClick(event)"
               style="width: 100%; border-radius: 9999px; background: #6C63FF; border-color: #6C63FF; font-size: 1rem; padding: 12px 0;"
             ></button>
 
-            <button pButton type="button"
+            <button
+              pButton
+              type="button"
               [icon]="event.is_wishlisted ? 'pi pi-heart-fill' : 'pi pi-heart'"
               [label]="event.is_wishlisted ? 'Tersimpan' : 'Tambah Wishlist'"
               outlined
@@ -185,8 +311,24 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
             ></button>
 
             <div style="display: flex; gap: 8px; margin-top: 12px; justify-content: center;">
-              <button pButton type="button" label="Salin Link" icon="pi pi-link" text size="small" (click)="copyLink()"></button>
-              <button pButton type="button" label="WhatsApp" icon="pi pi-whatsapp" text size="small" (click)="shareWhatsApp(event)"></button>
+              <button
+                pButton
+                type="button"
+                label="Salin Link"
+                icon="pi pi-link"
+                text
+                size="small"
+                (click)="copyLink()"
+              ></button>
+              <button
+                pButton
+                type="button"
+                label="WhatsApp"
+                icon="pi pi-whatsapp"
+                text
+                size="small"
+                (click)="shareWhatsApp(event)"
+              ></button>
             </div>
           </div>
         </div>
@@ -195,10 +337,16 @@ import { IdrCurrencyPipe } from '../../../../shared/pipes/idr-currency.pipe';
       <div style="text-align: center; padding: 80px 24px;">
         <div style="font-size: 3rem; margin-bottom: 16px;">😕</div>
         <h2 style="font-size: 1.25rem; font-weight: 700; color: #374151;">Acara tidak ditemukan</h2>
-        <p style="color: #6B7280; margin: 8px 0 24px;">Acara yang kamu cari tidak ada atau sudah dihapus.</p>
+        <p style="color: #6B7280; margin: 8px 0 24px;">
+          Acara yang kamu cari tidak ada atau sudah dihapus.
+        </p>
         <a routerLink="/">
-          <button pButton type="button" label="Kembali ke Beranda"
-            style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"></button>
+          <button
+            pButton
+            type="button"
+            label="Kembali ke Beranda"
+            style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"
+          ></button>
         </a>
       </div>
     }
@@ -232,8 +380,12 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   categoryLabel(cat: string): string {
     const map: Record<string, string> = {
-      MUSIC: 'Musik', SEMINAR: 'Seminar', SPORT: 'Olahraga',
-      EXHIBITION: 'Pameran', COMEDY: 'Komedi', OTHER: 'Lainnya',
+      MUSIC: 'Musik',
+      SEMINAR: 'Seminar',
+      SPORT: 'Olahraga',
+      EXHIBITION: 'Pameran',
+      COMEDY: 'Komedi',
+      OTHER: 'Lainnya',
     };
     return map[cat] ?? cat;
   }
@@ -247,7 +399,9 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   onBuyClick(event: any) {
     if (!this.authStore.isLoggedIn()) {
-      this.router.navigate(['/auth/login'], { queryParams: { returnUrl: `/events/${event.event_id}` } });
+      this.router.navigate(['/auth/login'], {
+        queryParams: { returnUrl: `/events/${event.event_id}` },
+      });
       return;
     }
     this.router.navigate(['/checkout', event.event_id]);
@@ -267,6 +421,9 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   shareWhatsApp(event: any) {
     const url = encodeURIComponent(window.location.href);
-    window.open(`https://wa.me/?text=${encodeURIComponent(event.title + ' ' + window.location.href)}`, '_blank');
+    window.open(
+      `https://wa.me/?text=${encodeURIComponent(event.title + ' ' + window.location.href)}`,
+      '_blank',
+    );
   }
 }

@@ -5,11 +5,7 @@ import { QueueService } from './queue.service';
 @Global()
 @Module({
   imports: [
-    BullModule.registerQueue(
-      { name: 'notifications' },
-      { name: 'payments' },
-      { name: 'tickets' },
-    ),
+    BullModule.registerQueue({ name: 'notifications' }, { name: 'payments' }, { name: 'tickets' }),
   ],
   providers: [QueueService],
   exports: [QueueService],

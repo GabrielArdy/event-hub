@@ -44,8 +44,12 @@ export const OrganizerStore = signalStore(
     const router = inject(Router);
 
     return {
-      clearError() { patchState(store, { error: null }); },
-      setStep(step: number) { patchState(store, { currentStep: step }); },
+      clearError() {
+        patchState(store, { error: null });
+      },
+      setStep(step: number) {
+        patchState(store, { currentStep: step });
+      },
 
       loadEvents: rxMethod<string | undefined>(
         pipe(
@@ -54,7 +58,10 @@ export const OrganizerStore = signalStore(
             orgApi.getMyEvents(status).pipe(
               tap((events) => patchState(store, { events, isLoading: false })),
               catchError((err) => {
-                patchState(store, { isLoading: false, error: err.error?.error?.code || 'LOAD_FAILED' });
+                patchState(store, {
+                  isLoading: false,
+                  error: err.error?.error?.code || 'LOAD_FAILED',
+                });
                 return of(null);
               }),
             ),
@@ -69,7 +76,10 @@ export const OrganizerStore = signalStore(
             orgApi.getEventDetail(eventId).pipe(
               tap((event) => patchState(store, { selectedEvent: event, isLoading: false })),
               catchError((err) => {
-                patchState(store, { isLoading: false, error: err.error?.error?.code || 'LOAD_FAILED' });
+                patchState(store, {
+                  isLoading: false,
+                  error: err.error?.error?.code || 'LOAD_FAILED',
+                });
                 return of(null);
               }),
             ),
@@ -91,7 +101,10 @@ export const OrganizerStore = signalStore(
                 });
               }),
               catchError((err) => {
-                patchState(store, { isSaving: false, error: err.error?.error?.code || 'CREATE_FAILED' });
+                patchState(store, {
+                  isSaving: false,
+                  error: err.error?.error?.code || 'CREATE_FAILED',
+                });
                 return of(null);
               }),
             ),
@@ -106,7 +119,10 @@ export const OrganizerStore = signalStore(
             orgApi.updateEvent(eventId, payload).pipe(
               tap((event) => patchState(store, { selectedEvent: event, isSaving: false })),
               catchError((err) => {
-                patchState(store, { isSaving: false, error: err.error?.error?.code || 'UPDATE_FAILED' });
+                patchState(store, {
+                  isSaving: false,
+                  error: err.error?.error?.code || 'UPDATE_FAILED',
+                });
                 return of(null);
               }),
             ),
@@ -124,7 +140,10 @@ export const OrganizerStore = signalStore(
                 setTimeout(() => router.navigate(['/organizer/events']), 1500);
               }),
               catchError((err) => {
-                patchState(store, { isSaving: false, error: err.error?.error?.code || 'PUBLISH_FAILED' });
+                patchState(store, {
+                  isSaving: false,
+                  error: err.error?.error?.code || 'PUBLISH_FAILED',
+                });
                 return of(null);
               }),
             ),

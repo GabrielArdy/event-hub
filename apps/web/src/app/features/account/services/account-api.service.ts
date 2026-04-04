@@ -2,7 +2,13 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ApiResponse, UserProfile, TicketInfo, OrderSummary, EventSummary } from '@eventhub/shared-types';
+import {
+  ApiResponse,
+  UserProfile,
+  TicketInfo,
+  OrderSummary,
+  EventSummary,
+} from '@eventhub/shared-types';
 import { environment } from '../../../../environments/environment.prod';
 
 export interface UpdateProfilePayload {
@@ -55,7 +61,9 @@ export class AccountApiService {
 
   changePassword(currentPassword: string, newPassword: string): Observable<void> {
     return this.http
-      .post<ApiResponse<void>>(`${this.AUTH_BASE}/change-password`, { current_password: currentPassword, new_password: newPassword })
+      .post<
+        ApiResponse<void>
+      >(`${this.AUTH_BASE}/change-password`, { current_password: currentPassword, new_password: newPassword })
       .pipe(map(() => undefined));
   }
 }

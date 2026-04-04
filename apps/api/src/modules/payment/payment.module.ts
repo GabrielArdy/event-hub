@@ -10,12 +10,7 @@ import { TicketingModule } from '../ticketing/ticketing.module';
 import { QueueModule } from '../../common/queue/queue.module';
 
 @Module({
-  imports: [
-    JwtModule.register({}),
-    OrganizerModule,
-    TicketingModule,
-    QueueModule,
-  ],
+  imports: [JwtModule.register({}), OrganizerModule, TicketingModule, QueueModule],
   providers: [PaymentService, PaymentStatusGateway, MidtransGateway, BulkRefundProcessor],
   controllers: [PaymentController],
   exports: [PaymentService, MidtransGateway],

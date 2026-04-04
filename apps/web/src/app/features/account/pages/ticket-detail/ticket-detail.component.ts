@@ -15,19 +15,81 @@ import { TicketInfo } from '@eventhub/shared-types';
 @Component({
   selector: 'app-ticket-detail',
   standalone: true,
-  imports: [RouterLink, ButtonModule, SkeletonModule, DividerModule, TagModule, DatePipe, NavbarComponent, TicketQrComponent, StatusBadgeComponent],
-  styles: [`
-    .page { max-width: 500px; margin: 0 auto; padding: 32px 24px; }
-    .back-link { display: flex; align-items: center; gap: 8px; color: #6C63FF; text-decoration: none; font-size: 0.875rem; margin-bottom: 24px; }
-    .ticket-card { background: #fff; border: 2px solid #E5E7EB; border-radius: 20px; overflow: hidden; }
-    .ticket-header { background: linear-gradient(135deg, #6C63FF 0%, #5A52D5 100%); color: #fff; padding: 24px; text-align: center; }
-    .event-title { font-size: 1.125rem; font-weight: 700; margin: 0 0 4px; }
-    .ticket-body { padding: 24px; }
-    .info-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; font-size: 0.875rem; color: #374151; }
-    .info-icon { color: #6C63FF; flex-shrink: 0; margin-top: 2px; }
-    .qr-section { display: flex; justify-content: center; padding: 24px; background: #F9FAFB; }
-    .ticket-footer { padding: 16px 24px; border-top: 1px dashed #E5E7EB; display: flex; justify-content: space-between; align-items: center; }
-  `],
+  imports: [
+    RouterLink,
+    ButtonModule,
+    SkeletonModule,
+    DividerModule,
+    TagModule,
+    DatePipe,
+    NavbarComponent,
+    TicketQrComponent,
+    StatusBadgeComponent,
+  ],
+  styles: [
+    `
+      .page {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 32px 24px;
+      }
+      .back-link {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #6c63ff;
+        text-decoration: none;
+        font-size: 0.875rem;
+        margin-bottom: 24px;
+      }
+      .ticket-card {
+        background: #fff;
+        border: 2px solid #e5e7eb;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+      .ticket-header {
+        background: linear-gradient(135deg, #6c63ff 0%, #5a52d5 100%);
+        color: #fff;
+        padding: 24px;
+        text-align: center;
+      }
+      .event-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        margin: 0 0 4px;
+      }
+      .ticket-body {
+        padding: 24px;
+      }
+      .info-row {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        margin-bottom: 12px;
+        font-size: 0.875rem;
+        color: #374151;
+      }
+      .info-icon {
+        color: #6c63ff;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .qr-section {
+        display: flex;
+        justify-content: center;
+        padding: 24px;
+        background: #f9fafb;
+      }
+      .ticket-footer {
+        padding: 16px 24px;
+        border-top: 1px dashed #e5e7eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    `,
+  ],
   template: `
     <app-navbar />
     <div class="page">
@@ -42,7 +104,9 @@ import { TicketInfo } from '@eventhub/shared-types';
         <div class="ticket-card">
           <div class="ticket-header">
             <div class="event-title">{{ t.event?.title }}</div>
-            <div style="font-size: 0.875rem; opacity: 0.85; margin-top: 4px;">{{ t.ticket_type }}</div>
+            <div style="font-size: 0.875rem; opacity: 0.85; margin-top: 4px;">
+              {{ t.ticket_type }}
+            </div>
             <div style="margin-top: 8px;">
               <app-status-badge [status]="t.status" />
             </div>
@@ -51,8 +115,9 @@ import { TicketInfo } from '@eventhub/shared-types';
           <div class="ticket-body">
             <div class="info-row">
               <i class="pi pi-calendar info-icon"></i>
-              <div>{{ t.event?.start_at | date:'EEEE, d MMMM yyyy' }}<br>
-                <span style="color: #6B7280;">{{ t.event?.start_at | date:'HH:mm' }} WIB</span>
+              <div>
+                {{ t.event?.start_at | date: 'EEEE, d MMMM yyyy' }}<br />
+                <span style="color: #6B7280;">{{ t.event?.start_at | date: 'HH:mm' }} WIB</span>
               </div>
             </div>
             <div class="info-row">
@@ -62,13 +127,15 @@ import { TicketInfo } from '@eventhub/shared-types';
             @if (t.seat) {
               <div class="info-row">
                 <i class="pi pi-th-large info-icon"></i>
-                <div>Kursi: <strong>{{ t.seat }}</strong></div>
+                <div>
+                  Kursi: <strong>{{ t.seat }}</strong>
+                </div>
               </div>
             }
             @if (t.used_at) {
               <div class="info-row">
                 <i class="pi pi-check-circle info-icon"></i>
-                <div>Check-in: {{ t.used_at | date:'d MMM yyyy, HH:mm' }}</div>
+                <div>Check-in: {{ t.used_at | date: 'd MMM yyyy, HH:mm' }}</div>
               </div>
             }
           </div>
@@ -80,10 +147,20 @@ import { TicketInfo } from '@eventhub/shared-types';
           }
 
           <div class="ticket-footer">
-            <div style="font-size: 0.75rem; color: #9CA3AF;">ID: {{ t.ticket_id.slice(0, 8) }}...</div>
+            <div style="font-size: 0.75rem; color: #9CA3AF;">
+              ID: {{ t.ticket_id.slice(0, 8) }}...
+            </div>
             @if (t.pdf_url) {
               <a [href]="t.pdf_url" target="_blank" download>
-                <button pButton type="button" label="Download" icon="pi pi-download" size="small" outlined style="border-radius: 9999px;"></button>
+                <button
+                  pButton
+                  type="button"
+                  label="Download"
+                  icon="pi pi-download"
+                  size="small"
+                  outlined
+                  style="border-radius: 9999px;"
+                ></button>
               </a>
             }
           </div>
@@ -93,7 +170,12 @@ import { TicketInfo } from '@eventhub/shared-types';
           <div style="font-size: 3rem; margin-bottom: 16px;">😕</div>
           <p style="color: #6B7280;">Tiket tidak ditemukan.</p>
           <a routerLink="/me/tickets">
-            <button pButton type="button" label="Kembali" style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"></button>
+            <button
+              pButton
+              type="button"
+              label="Kembali"
+              style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"
+            ></button>
           </a>
         </div>
       }
@@ -112,7 +194,10 @@ export class TicketDetailComponent implements OnInit {
     const ticketId = this.route.snapshot.paramMap.get('ticket_id')!;
     this.isLoading.set(true);
     this.accountApi.getTicketDetail(ticketId).subscribe({
-      next: (t) => { this.ticket.set(t); this.isLoading.set(false); },
+      next: (t) => {
+        this.ticket.set(t);
+        this.isLoading.set(false);
+      },
       error: () => this.isLoading.set(false),
     });
   }

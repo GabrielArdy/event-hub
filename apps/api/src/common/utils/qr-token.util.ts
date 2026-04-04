@@ -27,10 +27,7 @@ export function verifyQrToken(token: string): { ticketId: string; issuedAt: numb
     const [ticketId, issuedAt] = payloadPart.split(':');
     if (!ticketId || !issuedAt) return null;
 
-    const expectedSig = crypto
-      .createHmac('sha256', getSecret())
-      .update(payloadPart)
-      .digest('hex');
+    const expectedSig = crypto.createHmac('sha256', getSecret()).update(payloadPart).digest('hex');
 
     if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSig))) {
       return null;

@@ -47,11 +47,7 @@ export class PaymentStatusGateway implements OnGatewayConnection, OnGatewayDisco
     if (paymentId) client.leave(`payment:${paymentId}`);
   }
 
-  pushPaymentStatusChanged(
-    paymentId: string,
-    orderId: string,
-    payload: Record<string, unknown>,
-  ) {
+  pushPaymentStatusChanged(paymentId: string, orderId: string, payload: Record<string, unknown>) {
     this.server.to(`payment:${paymentId}`).emit('PAYMENT_STATUS_CHANGED', {
       type: 'PAYMENT_STATUS_CHANGED',
       payment_id: paymentId,

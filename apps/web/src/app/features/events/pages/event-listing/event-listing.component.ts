@@ -37,59 +37,119 @@ const CITIES = [
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    ButtonModule, InputTextModule, DropdownModule, ChipModule,
-    SkeletonModule, PaginatorModule, CarouselModule,
-    NavbarComponent, EventCardComponent,
+    ButtonModule,
+    InputTextModule,
+    DropdownModule,
+    ChipModule,
+    SkeletonModule,
+    PaginatorModule,
+    CarouselModule,
+    NavbarComponent,
+    EventCardComponent,
   ],
-  styles: [`
-    .hero {
-      background: linear-gradient(135deg, #6C63FF 0%, #5A52D5 100%);
-      color: #fff;
-      padding: 64px 24px;
-      text-align: center;
-    }
-    .hero h1 { font-size: 2rem; font-weight: 700; margin: 0 0 8px; }
-    .hero p { font-size: 1rem; opacity: 0.85; margin: 0 0 24px; }
-    .search-input-wrap {
-      max-width: 480px;
-      margin: 0 auto;
-      display: flex;
-      gap: 8px;
-    }
-    .search-input-wrap input {
-      flex: 1;
-      padding: 12px 16px;
-      border-radius: 9999px;
-      border: none;
-      font-size: 1rem;
-      outline: none;
-    }
-    .filter-bar {
-      background: #fff;
-      border-bottom: 1px solid #E5E7EB;
-      padding: 12px 24px;
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      overflow-x: auto;
-    }
-    .filter-label { font-size: 0.875rem; font-weight: 600; color: #374151; flex-shrink: 0; }
-    .content { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
-    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-    .section-title { font-size: 1.25rem; font-weight: 700; color: #111827; }
-    .results-count { font-size: 0.875rem; color: #6B7280; }
-    .events-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-    @media (max-width: 1024px) { .events-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 640px) { .events-grid { grid-template-columns: 1fr; } }
-    .empty-state { text-align: center; padding: 64px 24px; }
-    .empty-icon { font-size: 3rem; margin-bottom: 16px; }
-    .empty-title { font-size: 1.125rem; font-weight: 600; color: #374151; margin: 0 0 8px; }
-    .empty-desc { color: #6B7280; font-size: 0.875rem; margin: 0 0 24px; }
-  `],
+  styles: [
+    `
+      .hero {
+        background: linear-gradient(135deg, #6c63ff 0%, #5a52d5 100%);
+        color: #fff;
+        padding: 64px 24px;
+        text-align: center;
+      }
+      .hero h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0 0 8px;
+      }
+      .hero p {
+        font-size: 1rem;
+        opacity: 0.85;
+        margin: 0 0 24px;
+      }
+      .search-input-wrap {
+        max-width: 480px;
+        margin: 0 auto;
+        display: flex;
+        gap: 8px;
+      }
+      .search-input-wrap input {
+        flex: 1;
+        padding: 12px 16px;
+        border-radius: 9999px;
+        border: none;
+        font-size: 1rem;
+        outline: none;
+      }
+      .filter-bar {
+        background: #fff;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 12px 24px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        overflow-x: auto;
+      }
+      .filter-label {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #374151;
+        flex-shrink: 0;
+      }
+      .content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 32px 24px;
+      }
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+      .section-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #111827;
+      }
+      .results-count {
+        font-size: 0.875rem;
+        color: #6b7280;
+      }
+      .events-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      @media (max-width: 1024px) {
+        .events-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 640px) {
+        .events-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .empty-state {
+        text-align: center;
+        padding: 64px 24px;
+      }
+      .empty-icon {
+        font-size: 3rem;
+        margin-bottom: 16px;
+      }
+      .empty-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #374151;
+        margin: 0 0 8px;
+      }
+      .empty-desc {
+        color: #6b7280;
+        font-size: 0.875rem;
+        margin: 0 0 24px;
+      }
+    `,
+  ],
   template: `
     <app-navbar />
 
@@ -104,8 +164,12 @@ const CITIES = [
           [value]="searchQuery()"
           (input)="onSearch($event)"
         />
-        <button pButton type="button" icon="pi pi-search"
-          style="background: #fff; color: #6C63FF; border: none; border-radius: 9999px; width: 48px; height: 48px;"></button>
+        <button
+          pButton
+          type="button"
+          icon="pi pi-search"
+          style="background: #fff; color: #6C63FF; border: none; border-radius: 9999px; width: 48px; height: 48px;"
+        ></button>
       </div>
     </div>
 
@@ -114,7 +178,8 @@ const CITIES = [
       <span class="filter-label">Kategori:</span>
       @for (cat of categories; track cat.value) {
         <button
-          pButton type="button"
+          pButton
+          type="button"
           [label]="cat.label"
           [outlined]="selectedCategory() !== cat.value"
           size="small"
@@ -146,7 +211,14 @@ const CITIES = [
           @if (selectedCity) {
             <p-chip [label]="selectedCity" [removable]="true" (onRemove)="onCityChange('')" />
           }
-          <button pButton type="button" label="Reset" link size="small" (click)="resetFilters()"></button>
+          <button
+            pButton
+            type="button"
+            label="Reset"
+            link
+            size="small"
+            (click)="resetFilters()"
+          ></button>
         </div>
       }
 
@@ -182,9 +254,13 @@ const CITIES = [
             }
           </div>
           @if (eventsStore.activeFiltersCount() > 0) {
-            <button pButton type="button" label="Reset Filter"
+            <button
+              pButton
+              type="button"
+              label="Reset Filter"
               (click)="resetFilters()"
-              style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"></button>
+              style="border-radius: 9999px; background: #6C63FF; border-color: #6C63FF;"
+            ></button>
           }
         </div>
       } @else {

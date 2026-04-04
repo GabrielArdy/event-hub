@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ApiResponse, OrderSummary, PaymentDetail, PaymentMethod } from '@eventhub/shared-types';;
+import { ApiResponse, OrderSummary, PaymentDetail, PaymentMethod } from '@eventhub/shared-types';
 import { environment } from '../../../../environments/environment.prod';
 
 export interface CreateOrderPayload {

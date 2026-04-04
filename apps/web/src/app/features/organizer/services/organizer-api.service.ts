@@ -106,15 +106,24 @@ export class OrganizerApiService {
       .pipe(map((res) => res.data));
   }
 
-  createTicketType(eventId: string, payload: CreateTicketTypePayload): Observable<TicketTypeSummary> {
+  createTicketType(
+    eventId: string,
+    payload: CreateTicketTypePayload,
+  ): Observable<TicketTypeSummary> {
     return this.http
       .post<ApiResponse<TicketTypeSummary>>(`${this.BASE}/events/${eventId}/ticket-types`, payload)
       .pipe(map((res) => res.data));
   }
 
-  updateTicketType(eventId: string, ticketTypeId: string, payload: Partial<CreateTicketTypePayload>): Observable<TicketTypeSummary> {
+  updateTicketType(
+    eventId: string,
+    ticketTypeId: string,
+    payload: Partial<CreateTicketTypePayload>,
+  ): Observable<TicketTypeSummary> {
     return this.http
-      .patch<ApiResponse<TicketTypeSummary>>(`${this.BASE}/events/${eventId}/ticket-types/${ticketTypeId}`, payload)
+      .patch<
+        ApiResponse<TicketTypeSummary>
+      >(`${this.BASE}/events/${eventId}/ticket-types/${ticketTypeId}`, payload)
       .pipe(map((res) => res.data));
   }
 

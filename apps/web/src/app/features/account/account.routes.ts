@@ -15,9 +15,7 @@ export const accountRoutes: Routes = [
   {
     path: 'tickets/:ticket_id',
     loadComponent: () =>
-      import('./pages/ticket-detail/ticket-detail.component').then(
-        (m) => m.TicketDetailComponent,
-      ),
+      import('./pages/ticket-detail/ticket-detail.component').then((m) => m.TicketDetailComponent),
   },
   {
     path: 'transactions',
