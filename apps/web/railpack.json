@@ -1,0 +1,8 @@
+{
+  "build": {
+    "cmd": "pnpm -C ../.. run deploy:web:railway"
+  },
+  "start": {
+    "cmd": "pnpm -C ../.. run start:web:railway"
+  }
+}
