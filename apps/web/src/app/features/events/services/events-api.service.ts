@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiResponse, EventSummary, EventDetail, PaginationMeta } from '@eventhub/shared-types';
-import { environment } from '../../../../../environments/environment';
+import { environment } from '../../../../environments/environment.prod';
 
 export interface EventFilters {
   category?: string;
