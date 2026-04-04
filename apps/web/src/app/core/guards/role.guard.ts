@@ -1,12 +1,15 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-// TODO: inject AuthStore when implemented
+import { AuthStore } from '../../features/auth/store/auth.store';
 
 export const roleGuard =
   (requiredRole: string): CanActivateFn =>
   () => {
+    const authStore = inject(AuthStore);
     const router = inject(Router);
-    // TODO: check AuthStore.user()?.role === requiredRole
-    // Placeholder: always allow during scaffold
+    if (authStore.user()?.role !== requiredRole) {
+      router.navigate(['/']);
+      return false;
+    }
     return true;
   };

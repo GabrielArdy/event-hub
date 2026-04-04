@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 
-// TODO: Implement organizer dashboard pages
 export const organizerRoutes: Routes = [
   {
     path: '',
