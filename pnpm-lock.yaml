@@ -76,8 +76,8 @@ importers:
         specifier: ^11.0.0
         version: 11.1.17(@nestjs/common@11.1.17(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.17)(@nestjs/platform-socket.io@11.1.17)(reflect-metadata@0.2.2)(rxjs@7.8.2)
       '@prisma/client':
-        specifier: ^6.0.0
-        version: 6.19.3(prisma@6.19.3(typescript@5.9.3))(typescript@5.9.3)
+        specifier: ^6.19.3
+        version: 6.19.3(prisma@6.19.3(typescript@5.5.4))(typescript@5.5.4)
       bcrypt:
         specifier: ^5.1.1
         version: 5.1.1(encoding@0.1.13)
@@ -146,14 +146,14 @@ importers:
         specifier: ^5.0.0
         version: 5.8.2
       prisma:
-        specifier: ^6.0.0
-        version: 6.19.3(typescript@5.9.3)
+        specifier: ^6.19.3
+        version: 6.19.3(typescript@5.5.4)
       tsx:
         specifier: ^4.16.0
         version: 4.21.0
       typescript:
-        specifier: ^5.5.0
-        version: 5.9.3
+        specifier: 5.5.4
+        version: 5.5.4
       vitest:
         specifier: ^2.0.0
         version: 2.1.9(@types/node@22.19.15)(less@4.2.0)(sass@1.77.6)(terser@5.31.6)
@@ -5876,11 +5876,6 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  typescript@5.9.3:
-    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-
   uid@2.0.2:
     resolution: {integrity: sha512-u3xV3X7uzvi5b1MncmZo3i2Aw222Zk1keqLA1YkHldREkAhAqi65wuPfe7lHx8H/Wzy+8CE7S7uS3jekIM5s8g==}
     engines: {node: '>=8'}
@@ -8598,11 +8593,6 @@ snapshots:
     optionalDependencies:
       prisma: 6.19.3(typescript@5.5.4)
       typescript: 5.5.4
-
-  '@prisma/client@6.19.3(prisma@6.19.3(typescript@5.9.3))(typescript@5.9.3)':
-    optionalDependencies:
-      prisma: 6.19.3(typescript@5.9.3)
-      typescript: 5.9.3
 
   '@prisma/config@6.19.3':
     dependencies:
@@ -12049,15 +12039,6 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  prisma@6.19.3(typescript@5.9.3):
-    dependencies:
-      '@prisma/config': 6.19.3
-      '@prisma/engines': 6.19.3
-    optionalDependencies:
-      typescript: 5.9.3
-    transitivePeerDependencies:
-      - magicast
-
   proc-log@4.2.0: {}
 
   process-nextick-args@2.0.1: {}
@@ -12856,8 +12837,6 @@ snapshots:
   typed-assert@1.0.9: {}
 
   typescript@5.5.4: {}
-
-  typescript@5.9.3: {}
 
   uid@2.0.2:
     dependencies:
