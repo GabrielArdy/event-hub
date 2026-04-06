@@ -307,7 +307,7 @@ export class EventDashboardComponent implements OnInit, OnDestroy {
   readonly isLoading = signal(false);
   readonly stats = signal<EventLiveStats | null>(null);
   readonly feedItems = signal<ActivityFeedItem[]>([]);
-  readonly showScanModal = signal(false);
+  showScanModal = false;
   readonly scanInput = signal('');
   readonly isScanning = signal(false);
   readonly scanResult = signal<string | null>(null);
@@ -390,7 +390,7 @@ export class EventDashboardComponent implements OnInit, OnDestroy {
   }
 
   openScanModal() {
-    this.showScanModal.set(true);
+    this.showScanModal = true;
     this.scanResult.set(null);
     this.scanInput.set('');
   }

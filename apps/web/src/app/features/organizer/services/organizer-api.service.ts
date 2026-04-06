@@ -52,6 +52,7 @@ export interface EventReport {
   revenue_gross_idr: number;
   revenue_net_idr: number;
   platform_fee_idr: number;
+  gateway_fee_idr: number;
   ticket_sold: number;
   checkin_count: number;
   sales_by_type: { ticket_type: string; sold: number; revenue_idr: number }[];

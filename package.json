@@ -11,9 +11,9 @@
     "build": "pnpm run build:libs && pnpm --filter @eventhub/api exec prisma generate --schema=../../prisma/schema.prisma && pnpm --filter @eventhub/api build",
     "start": "prisma migrate deploy --schema=prisma/schema.prisma && node apps/api/dist/main.js",
     "build:railway": "pnpm run build",
-    "build:web:railway": "pnpm run build:libs && pnpm --filter @eventhub/web build",
+    "build:web:railway": "pnpm run build:libs && pnpm --filter @eventhub/web run build -- --configuration production",
     "deploy:web:railway": "pnpm run build:web:railway",
-    "start:web:railway": "pnpm dlx serve -s dist/apps/web/browser -l ${PORT:-3000}",
+    "start:web:railway": "node_modules/.bin/serve -s dist/apps/web/browser -l ${PORT:-3000}",
     "db:migrate": "prisma migrate dev --schema=prisma/schema.prisma",
     "db:generate": "prisma generate --schema=prisma/schema.prisma",
     "db:seed": "tsx prisma/seed.ts",
@@ -25,6 +25,7 @@
   "devDependencies": {
     "prettier": "^3.3.0",
     "prisma": "^6.19.3",
+    "serve": "^14.2.4",
     "tsx": "^4.16.0",
     "typescript": "5.5.4"
   },
